@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="../../../lib/three.js-r110/build/three.min.js"></script>
+    <script src="../../../lib/three-vrm/three-vrm.min.js"></script>
+    <script src="../../../lib/three.js-r110/examples/js/controls/OrbitControls.js"></script>
+    <script src="../../../lib/three.js-r110/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        // ページの読み込みを待つ
+        window.addEventListener('load', init);
+
+        function init() {
+
+            let array = [[7.54516134791414, -21.768140173180647, -183.4596745057812], [-124.5336455982307, 2.415918621530429, -284.8569690566266], [-193.02280218024345, -134.14277584172567, -702.8368725045019], [-119.88440248193754, 9.72410772056005, -970.9002981473045], [154.8486118073826, -45.952199328402315, -334.57519674023166], [215.08971510235713, -174.52465049814086, -714.29186443519], [166.46238247650444, -23.654825428960223, -983.4563352068009], [3.4347934233028363, 63.754926563186196, 133.4556896348461], [4.0444335372624645, 92.51847278387943, 380.5741280391957], [-23.95490498313763, -6.959973842296878, 587.2537513546404], [-59.80226250940439, 52.05215416663249, 664.2835118003845], [195.78954304127942, 82.72433860524372, 345.4867843416409], [436.04629683883314, 101.85369806885731, 157.6088322373995], [467.13680014680523, -35.958118637279526, -188.32700894361506], [-182.2795224752419, 127.74897641993233, 369.8786700504398], [-398.79876732551367, 27.03427199859532, 338.61811621791105], [-514.5184003971674, -116.86618120857737, 524.1660520795907]];
+
+            console.log(array);
+
+            // for (i = 0; i < array[0].length; i++)
+            //     array[0][i] *= 0.001;
+
+            // for (i = 1; i < array.length; i++) {
+            //     for (j = 0; j < array[i].length; j++)
+            //         switch (j) {
+            //             case 0:
+            //                 array[i][j] *= 1.0;
+            //                 break;
+            //             case 1:
+            //                 array[i][j] *= 1.0;
+            //                 break;
+            //             case 2:
+            //                 array[i][j] *= 1.0;
+            //                 break;
+            //             default:break;
+            //         }
+            // }
+            //create renderer
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#myCanvas')
+            })
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            //create scene
+            const scene = new THREE.Scene();
+
+            //create cam
+            const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 20.0);
+            camera.position.set(0, 1, 5);
+
+            //camera controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.screenSpacePanning = true;
+            controls.target.set(0.0, 1.0, 0.0);
+            controls.update();
+
+            //light
+            const light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(1.0, 1.0, 1.0).normalize();
+            scene.add(light);
+
+            // 入力されたボーンの単位ベクトルを求める
+
+            function computeUnit(bonesArray) {
+                let NormVec = new Array();
+                NormVec[0] = new THREE.Vector3(array[1][0] - array[0][0], array[1][1] - array[0][1], array[1][2] - array[0][2]).normalize();
+                NormVec[1] = new THREE.Vector3(array[2][0] - array[1][0], array[2][1] - array[1][1], array[2][2] - array[1][2]).normalize();
+                NormVec[2] = new THREE.Vector3(array[3][0] - array[2][0], array[3][1] - array[2][1], array[3][2] - array[2][2]).normalize();
+                NormVec[3] = new THREE.Vector3(array[4][0] - array[0][0], array[4][1] - array[0][1], array[4][2] - array[0][2]).normalize();
+                NormVec[4] = new THREE.Vector3(array[5][0] - array[4][0], array[5][1] - array[4][1], array[5][2] - array[4][2]).normalize();
+                NormVec[5] = new THREE.Vector3(array[6][0] - array[5][0], array[6][1] - array[5][1], array[6][2] - array[5][2]).normalize();
+                NormVec[6] = new THREE.Vector3(array[7][0] - array[0][0], array[7][1] - array[0][1], array[7][2] - array[0][2]).normalize();
+                NormVec[7] = new THREE.Vector3(array[8][0] - array[6][0], array[8][1] - array[6][1], array[8][2] - array[6][2]).normalize();
+                NormVec[8] = new THREE.Vector3(array[9][0] - array[8][0], array[9][1] - array[8][1], array[9][2] - array[8][2]).normalize();
+                NormVec[9] = new THREE.Vector3(array[10][0] - array[9][0], array[10][1] - array[9][1], array[10][2] - array[9][2]).normalize();
+                NormVec[10] = new THREE.Vector3(array[11][0] - array[9][0], array[11][1] - array[9][1], array[11][2] - array[9][2]).normalize();
+                NormVec[11] = new THREE.Vector3(array[12][0] - array[11][0], array[12][1] - array[11][1], array[12][2] - array[11][2]).normalize();
+                NormVec[12] = new THREE.Vector3(array[13][0] - array[12][0], array[13][1] - array[12][1], array[13][2] - array[12][2]).normalize();
+                NormVec[13] = new THREE.Vector3(array[14][0] - array[9][0], array[14][1] - array[9][1], array[14][2] - array[9][2]).normalize();
+                NormVec[14] = new THREE.Vector3(array[15][0] - array[14][0], array[15][1] - array[14][1], array[15][2] - array[14][2]).normalize();
+                NormVec[15] = new THREE.Vector3(array[16][0] - array[15][0], array[16][1] - array[15][1], array[16][2] - array[15][2]).normalize();
+
+                return NormVec;
+            }
+
+            function computeLength(vrm) {
+                let vrmLength = new Array();
+                vrmLength[0] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+                ).length();
+                vrmLength[1] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.z
+                ).length();
+                vrmLength[2] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.z
+                ).length();
+                vrmLength[3] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+                ).length();
+                vrmLength[4] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.z
+                ).length();
+                vrmLength[5] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.z
+                ).length();
+                vrmLength[6] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+                ).length();
+                vrmLength[7] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z
+                ).length();
+                vrmLength[8] = new THREE.Vector3(
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y,
+                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+                ).length();
+            }
+
+
+            //gltf and vrm
+            let currentVrm = undefined;
+            const loader = new THREE.GLTFLoader();
+            loader.crossOrigin = 'anonymous';
+            loader.load(
+                'sakura.vrm',
+                (gltf) => {
+                    THREE.VRM.from(gltf).then((vrm) => {
+                        scene.add(vrm.scene);
+                        console.log(vrm);
+
+                        currentVrm = vrm;
+
+                        //set bone position
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x = array[0][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y = array[0][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z = array[0][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.x = array[1][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.y = array[1][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.z = array[1][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.x = array[2][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.y = array[2][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.z = array[2][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.x = array[3][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.y = array[3][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.z = array[3][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.x = array[4][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.y = array[4][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.z = array[4][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.x = array[5][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.y = array[5][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.z = array[5][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.x = array[6][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.y = array[6][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.z = array[6][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x = array[7][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y = array[7][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z = array[7][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.x = array[8][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.y = array[8][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.z = array[8][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x = array[9][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y = array[9][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z = array[9][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.x = array[10][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.y = array[10][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.z = array[10][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.x = array[11][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.y = array[11][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.z = array[11][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.x = array[12][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.y = array[12][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.z = array[12][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.x = array[13][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.y = array[13][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.z = array[13][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.x = array[14][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.y = array[14][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.z = array[14][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.x = array[15][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.y = array[15][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.z = array[15][2];
+
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.x = array[16][0];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.y = array[16][1];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.z = array[16][2];
+
+
+                    });
+                },
+                (progress) => console.log('Loading moddel...', 100 * (progress.loaded / progress.total), '%'),
+                (error) => console.error(error)
+            );
+            //helpers
+            const gridHelper = new THREE.GridHelper(10, 10);
+            scene.add(gridHelper);
+
+            const axesHelper = new THREE.AxesHelper(5);
+            scene.add(axesHelper);
+
+            //animate
+            const clock = new THREE.Clock();
+
+            renderer.render(scene, camera);
+            if (currentVrm)
+                console.log(currentVrm);
+
+            tick();
+            // 毎フレーム時に実行されるループイベントです
+            function tick() {
+                const deltaTime = clock.getDelta();
+
+                if (currentVrm) {
+                    //tweak bones
+
+                }
+                renderer.render(scene, camera); // レンダリング
+                requestAnimationFrame(tick);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+</body>
+
+</html>

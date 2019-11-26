@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :devlop do |server|
+    # 仮想マシンのネットワーク環境設定。
+    # 目的に応じて以下のどちらかを使いましょう。
+    # "private_network"を指定するとホストOSからのみアクセス可
+    server.vm.network :private_network, ip: "192.168.33.10"
+    server.vm.box = "bento/ubuntu-18.04"
+    server.ssh.insert_key = false
+    server.vm.hostname = "FusionDesignProj"
+    server.hostsupdater.aliases = ["local.devel.com"]
+    # パブリックネットワークに公開
+    # server.vm.network "public_network"
+    server.vm.synced_folder "./", "/vagrant"
+    server.vm.synced_folder "../html", "/var/www/html/"
+     script = <<SCRIPT
+sudo apt update
+sudo apt-add-repository ppa:ondrej/apache2
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ondrej/php
+sudo apt install apache2 
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ondrej/php
+sudo apt install php7.0 -y
+sudo apt install php7.0-mysql
+sudo apt install php7.0-mbstring
+sudo apt install mysql-server mysql-client -y
+sudo apt install php-mysql -y
+sudo service apache2 start
+
+sudo rm -rf /var/lib/mysql
+sudo mkdir /var/lib/mysql
+sudo chown -R mysql.mysql /var/lib/mysql 
+sudo mysqld --initialize-insecure
+sudo service mysql restart
+
+
+SCRIPT
+    server.vm.provision :shell, :inline => script
+  end
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["setextradata", :id, "VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled", 0]
+  end
+end

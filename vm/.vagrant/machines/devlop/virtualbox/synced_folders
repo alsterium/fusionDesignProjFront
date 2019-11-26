@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/source/repos/alsterium/fusionDesignProjFront/vm","disabled":false,"__vagrantfile":true},"/var/www/html/":{"guestpath":"/var/www/html","hostpath":"C:/source/repos/alsterium/fusionDesignProjFront/html","disabled":false,"__vagrantfile":true}}}
