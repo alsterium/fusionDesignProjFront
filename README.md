@@ -7,5 +7,5 @@
 5. "vm"ディレクトリ中で、コマンドプロンプトかPowershellを管理者権限で開く
 6. "Vagrant up" をタイプしてVMが起動するまで待つ
 7. vmが起動したら、"local.devel.com"で"html"中にあるhtmlファイルにアクセスできる
-#マシンのシャットダウン
+# マシンのシャットダウン
 シェルで"vagrant halt"をタイプ
