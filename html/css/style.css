@@ -1,0 +1,15 @@
+body{
+    background: snow;
+}
+
+label{
+    margin: 5px ;
+    width: auto;
+    
+}
+
+#model_preview{
+    width: 400px;
+    height: 600px;
+    border: tomato 6px;
+}
