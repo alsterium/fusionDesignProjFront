@@ -2,10 +2,13 @@ body{
     background: snow;
 }
 
-label{
-    margin: 5px ;
-    width: auto;
-    
+div{
+    margin: auto;
+    padding: 5px;
+}
+
+.btn{
+    margin: 15px;
 }
 
 #model_preview{
