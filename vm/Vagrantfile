@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # パブリックネットワークに公開
     # server.vm.network "public_network"
     server.vm.synced_folder "./", "/vagrant"
-    server.vm.synced_folder "../html", "/var/www/html/"
+    server.vm.synced_folder "../", "/var/www/html/"
      script = <<SCRIPT
 sudo apt update
 sudo apt-add-repository ppa:ondrej/apache2
