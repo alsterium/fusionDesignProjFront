@@ -9,3 +9,5 @@
 7. vmが起動したら、"local.devel.com"で"html"中にあるhtmlファイルにアクセスできる
 # マシンのシャットダウン
 シェルで"vagrant halt"をタイプ
+# Demo
+[https://alsterium.github.io/fusionDesignProjFront/html/moc.html](https://alsterium.github.io/fusionDesignProjFront/html/moc.html)
