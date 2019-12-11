@@ -32,8 +32,9 @@ function init() {
     //create renderer
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('#model_preview'),
-        preserveDrawingBuffer:true
+        preserveDrawingBuffer:true,
     });
+    renderer.setPixelRatio(window.devicePixelRatio);
 
     let width = document.getElementById('model_preview').clientWidth;
     let height = document.getElementById('model_preview').clientHeight;
