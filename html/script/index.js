@@ -31,7 +31,8 @@ function init() {
     // }
     //create renderer
     const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#model_preview')
+        canvas: document.querySelector('#model_preview'),
+        preserveDrawingBuffer:true
     });
 
     let width = document.getElementById('model_preview').clientWidth;
