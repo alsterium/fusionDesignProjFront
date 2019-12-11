@@ -1,17 +1,22 @@
-body{
+body {
     background: snow;
 }
 
-div{
-    margin: auto;
-    padding: 5px;
-}
-
-.btn{
+.btn {
     margin: 15px;
 }
 
-#model_preview{
+.input-field {
+    width: 400px;
+    border: 3px;
+    padding: 15px;
+}
+
+.card {
+    width: min-content;
+}
+
+#model_preview {
     width: 400px;
     height: 600px;
     border: tomato 6px;
