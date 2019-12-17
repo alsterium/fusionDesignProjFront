@@ -14,11 +14,12 @@ window.onload = () => {
     };
 
     /*sync camera to <video> tag */
-    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-            video.srcObject = stream;
-            video.onloadedmetadata = (e) => {
-                video.play();
-            };
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(function(stream) {
+            document.getElementById('#camera').srcObject = stream;
+            // video.onloadedmetadata = (e) => {
+            //     video.play();
+            // };
         })
         .catch((err) => {
             console.log(err.name + ":" + err.message);
