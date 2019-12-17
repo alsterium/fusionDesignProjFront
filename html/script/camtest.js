@@ -1,5 +1,3 @@
-import { Stream } from "stream";
-
 window.onload = () => {
     const video = document.querySelector("#camera");
     const canvas = document.querySelector("#picture");
