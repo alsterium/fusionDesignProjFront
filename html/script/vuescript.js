@@ -1,7 +1,8 @@
 new Vue({
     el: "#app",
     data: {
-        toggleView: true
+        toggleView: true,
+        facingValue: "environment"
     },
     methods: {
         grabImage: function() {
@@ -11,16 +12,15 @@ new Vue({
         },
         activateCamera: function() {
             this.toggleView = !this.toggleView;
-            console.log(this.toggleView);
             if (this.toggleView != true) {
                 const video = document.getElementById("cam_preview");
 
                 /*camera settings*/
 
-                const constraints = {
+                var constraints = {
                     audio: false,
                     video: {
-                        facingMode: "environment"
+                        facingMode: this.facingMode
                     }
                 };
 
@@ -34,7 +34,15 @@ new Vue({
                         console.log(err.name + ":" + err.message);
                     });
             }
+        },
+        toggleCamera: function() {
+            if (this.facingValue === "environment") {
+                this.facingValue = "user";
+            } else if (this.facingValue === "user") {
+                this.facingValue = "environment";
+            }
 
+            console.log(this.facingValue);
         }
     }
 });

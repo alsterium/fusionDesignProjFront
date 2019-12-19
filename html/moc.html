@@ -30,6 +30,7 @@
         </div>
         <div class="card">
             <input class="btn" type="button" value="カメラを起動" v-on:click="activateCamera">
+            <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView">
             <!-- <label class="btn">
           写真を選択
           <input type="file" style="display: none;" />
