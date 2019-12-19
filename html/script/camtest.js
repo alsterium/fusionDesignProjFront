@@ -1,33 +1,23 @@
 window.onload = () => {
-    const video = document.querySelector("#camera");
-    const canvas = document.querySelector("#picture");
+    const video = document.getElementById("camera");
 
     /*camera settings*/
 
     const constraints = {
         audio: false,
         video: {
-            width: 300,
-            height: 200,
-            facingMode: "user"
+            facingMode: "environment"
         }
     };
 
     /*sync camera to <video> tag */
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        .then(function(stream) {
-            document.getElementById('#camera').srcObject = stream;
-            // video.onloadedmetadata = (e) => {
-            //     video.play();
-            // };
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+            video.srcObject = stream;
         })
-        .catch((err) => {
+        .catch(err => {
             console.log(err.name + ":" + err.message);
         });
 
-    /*シャッターボタン */
-    document.querySelector("#shutter").addEventListener("click", () => {
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    });
-}
+};
