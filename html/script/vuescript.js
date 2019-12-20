@@ -2,7 +2,7 @@ new Vue({
     el: "#app",
     data: {
         toggleView: true,
-        facingValue: "environment"
+        facingValue: "environment",
     },
     methods: {
         grabImage: function() {
@@ -20,7 +20,7 @@ new Vue({
                 var constraints = {
                     audio: false,
                     video: {
-                        facingMode: this.facingMode
+                        facingMode: this.facingValue
                     }
                 };
 
@@ -29,6 +29,7 @@ new Vue({
                     .getUserMedia(constraints)
                     .then(stream => {
                         video.srcObject = stream;
+                        localMediaStream = stream;
                     })
                     .catch(err => {
                         console.log(err.name + ":" + err.message);
