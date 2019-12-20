@@ -12,37 +12,40 @@ new Vue({
         },
         activateCamera: function() {
             this.toggleView = !this.toggleView;
-            if (this.toggleView != true) {
-                const video = document.getElementById("cam_preview");
+            if (this.toggleView != true)
+                this.initCamera();
+        },
+        initCamera: function() {
+            const video = document.getElementById("cam_preview");
 
-                /*camera settings*/
+            /*camera settings*/
 
-                var constraints = {
-                    audio: false,
-                    video: {
-                        facingMode: this.facingValue
-                    }
-                };
+            var constraints = {
+                audio: false,
+                video: {
+                    facingMode: this.facingValue
+                }
+            };
 
-                /*sync camera to <video> tag */
-                navigator.mediaDevices
-                    .getUserMedia(constraints)
-                    .then(stream => {
-                        video.srcObject = stream;
-                        localMediaStream = stream;
-                    })
-                    .catch(err => {
-                        console.log(err.name + ":" + err.message);
-                    });
-            }
+            /*sync camera to <video> tag */
+            navigator.mediaDevices
+                .getUserMedia(constraints)
+                .then(stream => {
+                    video.srcObject = stream;
+                    localMediaStream = stream;
+                })
+                .catch(err => {
+                    console.log(err.name + ":" + err.message);
+                });
         },
         toggleCamera: function() {
             if (this.facingValue === "environment") {
                 this.facingValue = "user";
+                this.initCamera();
             } else if (this.facingValue === "user") {
                 this.facingValue = "environment";
+                this.initCamera();
             }
-
             console.log(this.facingValue);
         }
     }
