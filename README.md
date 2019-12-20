@@ -15,5 +15,9 @@
 2. "npm install -g http-server"を実行し、http-serverをインストール
 3. プロジェクトルートディレクトリでhttp-serverを起動
 4. localhost:8080にブラウザでアクセスするとプロジェクトルートのindex.htmlが表示される
+### Node.jsでhttpsサーバー
+opensslをインストール(windowsの場合はパスも通す)
+"openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out crt.pem"を実行し、オレオレ証明書を発行
+"http-server -S -C crt.pem"を実行して、シェルに出てきたipにアクセス
 ### Demo
 [https://alsterium.github.io/fusionDesignProjFront/html/moc.html](https://alsterium.github.io/fusionDesignProjFront/html/moc.html)
