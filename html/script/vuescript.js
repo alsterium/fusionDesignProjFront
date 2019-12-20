@@ -16,7 +16,7 @@ new Vue({
                 this.initCamera();
         },
         initCamera: function() {
-            const video = document.getElementById("cam_preview");
+            var video = document.getElementById("cam_preview");
 
             /*camera settings*/
 
