@@ -1,3 +1,7 @@
+:root {
+    --object-width: 400px;
+}
+
 body {
     background: snow;
 }
@@ -7,13 +11,9 @@ body {
 }
 
 .input-field {
-    width: 400px;
+    width: var(--object-width);
     border: 3px;
     padding: 15px;
-}
-
-.card {
-    width: min-content;
 }
 
 #model_preview {
@@ -23,9 +23,11 @@ body {
 }
 
 #app {
-    max-width: 400px;
+    max-width: var(--object-width);
+    margin: 0 auto;
 }
 
 video {
-    max-width: 400px;
+    max-width: var(--object-width);
+    max-height: 400px;
 }
