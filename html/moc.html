@@ -28,6 +28,7 @@
             <canvas id="model_preview" class="card" v-show="toggleView"></canvas>
             <video id="cam_preview" autoplay playsinline="true" v-show="!toggleView"></video>
         </div>
+        {{facingValue}}
         <div class="card">
             <input class="btn" type="button" value="カメラを起動" v-on:click="activateCamera">
             <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView">
