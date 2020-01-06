@@ -16,6 +16,16 @@ body {
     padding: 15px;
 }
 
+.card {
+    width: 400px;
+    max-width: var(--object-width);
+    text-align: center;
+}
+
+.select-wrapper+label {
+    margin: 13px;
+}
+
 #model_preview {
     width: 400px;
     height: 400px;
