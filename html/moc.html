@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,58 +10,84 @@
     <script src="../lib/three-vrm.min.js"></script>
     <script src="../lib/GLTFLoader.js"></script>
     <script src="../lib/OrbitControls.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+    />
     <!-- フォントファイル -->
-    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="./script/index.js"></script>
 
     <link rel="stylesheet" href="./css/style.css" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- <div class="row"> -->
     <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo center"><span style="font-family: 'Pacifico', cursive;"
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center"
+          ><span style="font-family: 'Pacifico', cursive; font-size: 70%;"
             >Line Stamp Maker</span
           >
         </a>
-            <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html">Sass</a></li>
                 <li><a href="badges.html">Components</a></li>
                 <li><a href="collapsible.html">JavaScript</a></li>
             </ul> -->
-        </div>
+      </div>
     </nav>
 
     <div id="app">
-        <div>
-            <canvas id="model_preview" class="card" v-show="toggleView"></canvas>
-            <video id="cam_preview" autoplay playsinline="true" v-show="!toggleView"></video>
-        </div>
-        <div class="card">
-            <input class="btn" type="button" value="カメラを起動" v-on:click="activateCamera" />
-            <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
+      <div class="adjust-box box-1x1">
+        <canvas id="model_preview" class="card" v-show="toggleView"></canvas>
+        <video
+          id="cam_preview"
+          autoplay
+          playsinline="true"
+          v-show="!toggleView"
+        ></video>
+      </div>
+      <div class="card">
+        <input
+          class="btn"
+          type="button"
+          value="カメラを起動"
+          v-on:click="activateCamera"
+        />
+        <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
 
-            <a class="btn-floating waves-effect btn-large waves-light red" v-on:click="toggleCamera" v-if="!toggleView"><i class="material-icons">switch_camera</i></a>
+        <a
+          class="btn-floating waves-effect btn-large waves-light red"
+          v-on:click="toggleCamera"
+          v-if="!toggleView"
+          ><i class="material-icons">switch_camera</i></a
+        >
 
-            <!-- <label class="btn">
+        <!-- <label class="btn">
           写真を選択
           <input type="file" style="display: none;" />
         </label> -->
-            <div class="input-field">
-                <select>
+        <div class="input-field">
+          <select>
             <option value="" disabled selected>モデルを選択</option>
             <option value="1">Model 1</option>
             <option value="2">Model 2</option>
           </select>
-                <label>chose model</label>
-            </div>
-            <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png">ポーズを決定</a
+          <label>chose model</label>
+        </div>
+        <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png"
+          >ポーズを決定</a
         >
       </div>
     </div>
