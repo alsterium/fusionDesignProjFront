@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script>
+      window.onload = () => {
+        document.addEventListener("mousemove", draw);
+        // draw();
+      };
+      function draw(e) {
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var mouseCoordX = e.pageX;
+        var mouseCoordY = e.pageY;
+        context.font = "48px serif";
+        context.textAlign = "center";
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+        context.fillStyle = "black";
+        context.fillText("Hello World", mouseCoordX, mouseCoordY);
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>

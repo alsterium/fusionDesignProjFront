@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Index</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <a href="./html/arraytest.html">arraytest</a><br />
     <a href="./html/bones.html">bones</a><br />
-    <a href="./html/moc.html">moc</a><br>
+    <a href="./html/moc.html">moc</a><br />
+    <a href="./html/canvas_test.html">canvas_test</a><br />
     <canvas id="qr"></canvas>
 
     <script>
-        function writeQr(canvas, data) {
-            return new Promise((res, rej) => {
-                QRCode.toCanvas(
-                    canvas,
-                    data, {
-                        margin: 2,
-                        scale: 2
-                    },
-                    (err, tg) => (!err ? res(tg) : rej(err))
-                );
-            });
-        }
-        var url = location.href;
-        writeQr(document.getElementById("qr"), url);
+      function writeQr(canvas, data) {
+        return new Promise((res, rej) => {
+          QRCode.toCanvas(
+            canvas,
+            data,
+            {
+              margin: 2,
+              scale: 2
+            },
+            (err, tg) => (!err ? res(tg) : rej(err))
+          );
+        });
+      }
+      var url = location.href;
+      writeQr(document.getElementById("qr"), url);
     </script>
-</body>
-
+  </body>
 </html>
