@@ -64,15 +64,17 @@
             // 入力されたボーンの単位ベクトルを求める
 
             function computeUnit(bonesArray) {
+            	console.log(bonesArray);
                 let NormVec = new Array();
                 NormVec[0] = new THREE.Vector3(bonesArray[1][0] - bonesArray[0][0], bonesArray[1][1] - bonesArray[0][1], bonesArray[1][2] - bonesArray[0][2]).normalize();
+                console.log(NormVec[0]);
                 NormVec[1] = new THREE.Vector3(bonesArray[2][0] - bonesArray[1][0], bonesArray[2][1] - bonesArray[1][1], bonesArray[2][2] - bonesArray[1][2]).normalize();
                 NormVec[2] = new THREE.Vector3(bonesArray[3][0] - bonesArray[2][0], bonesArray[3][1] - bonesArray[2][1], bonesArray[3][2] - bonesArray[2][2]).normalize();
                 NormVec[3] = new THREE.Vector3(bonesArray[4][0] - bonesArray[0][0], bonesArray[4][1] - bonesArray[0][1], bonesArray[4][2] - bonesArray[0][2]).normalize();
                 NormVec[4] = new THREE.Vector3(bonesArray[5][0] - bonesArray[4][0], bonesArray[5][1] - bonesArray[4][1], bonesArray[5][2] - bonesArray[4][2]).normalize();
                 NormVec[5] = new THREE.Vector3(bonesArray[6][0] - bonesArray[5][0], bonesArray[6][1] - bonesArray[5][1], bonesArray[6][2] - bonesArray[5][2]).normalize();
                 NormVec[6] = new THREE.Vector3(bonesArray[7][0] - bonesArray[0][0], bonesArray[7][1] - bonesArray[0][1], bonesArray[7][2] - bonesArray[0][2]).normalize();
-                NormVec[7] = new THREE.Vector3(bonesArray[8][0] - bonesArray[6][0], bonesArray[8][1] - bonesArray[6][1], bonesArray[8][2] - bonesArray[6][2]).normalize();
+                NormVec[7] = new THREE.Vector3(bonesArray[8][0] - bonesArray[7][0], bonesArray[8][1] - bonesArray[7][1], bonesArray[8][2] - bonesArray[7][2]).normalize();
                 NormVec[8] = new THREE.Vector3(bonesArray[9][0] - bonesArray[8][0], bonesArray[9][1] - bonesArray[8][1], bonesArray[9][2] - bonesArray[8][2]).normalize();
                 NormVec[9] = new THREE.Vector3(bonesArray[10][0] - bonesArray[9][0], bonesArray[10][1] - bonesArray[9][1], bonesArray[10][2] - bonesArray[9][2]).normalize();
                 NormVec[10] = new THREE.Vector3(bonesArray[11][0] - bonesArray[9][0], bonesArray[11][1] - bonesArray[9][1], bonesArray[11][2] - bonesArray[9][2]).normalize();
@@ -167,20 +169,25 @@
                     vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.y,
                     vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.z
                 ).length();
-                vrmLength[16] = new THREE.Vector3(
+                /*vrmLength[16] = new THREE.Vector3(
                     vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x,
                     vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y,
                     vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-                ).length();
+                ).length();*/
 
                 return vrmLength;
             }
 
-            function computeDisModel(NormVec, vrmLength){
+            function computeDistModel(NormVec, vrmLength){
             	let DistModelVec = new Array();
-            	for (var i = 0; i < 17 ; i++) {
-            		DistModelVec[i] = NormVec[i] * vrmLength[i];
-            	}
+            	
+            	console.log(NormVec, vrmLength);
+            	console.log(NormVec[0].x * vrmLength[0]);
+            	for(var i = 0; i < 16 ; i++){
+            		DistModelVec[i] = new THREE.Vector3(NormVec[i].x * vrmLength[i], NormVec[i].y * vrmLength[i], NormVec[i].z * vrmLength[i]);
+            		}
+            	console.log(DistModelVec);
+            	
 
             	return DistModelVec;
             }
@@ -189,84 +196,91 @@
             	let ModelCood = new Array();
             
            		ModelCood[0] = new THREE.Vector3(
-           			DistModelVec[0][0] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
-            		DistModelVec[0][1] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
-           			DistModelVec[0][2] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+           			vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+            		vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
+           			vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
             			);
            		ModelCood[1] = new THREE.Vector3(
-           			DistModelVec[1][0] + ModelCood[0][0],
-            		DistModelVec[1][1] + ModelCood[0][1], 
-           			DistModelVec[1][2] + ModelCood[0][2]
+           			DistModelVec[0].x + ModelCood[0].x,
+            		DistModelVec[0].y + ModelCood[0].y, 
+           			DistModelVec[0].z + ModelCood[0].z
             			);
            		ModelCood[2] = new THREE.Vector3(
-           			DistModelVec[2][0] + ModelCood[1][0],
-            		DistModelVec[2][1] + ModelCood[1][1], 
-           			DistModelVec[2][2] + ModelCood[1][2]
-            			);
+           			DistModelVec[1].x + ModelCood[1].x,
+            		DistModelVec[1].y + ModelCood[1].y, 
+           			DistModelVec[1].z + ModelCood[1].z
+           			    );
            		ModelCood[3] = new THREE.Vector3(
-           			DistModelVec[3][0] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
-            		DistModelVec[3][1] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
-           			DistModelVec[3][2] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+           			DistModelVec[2].x + ModelCood[2].x,
+            		DistModelVec[2].y + ModelCood[2].y, 
+           			DistModelVec[2].z + ModelCood[2].z
             			);
            		ModelCood[4] = new THREE.Vector3(
-           			DistModelVec[4][0] + ModelCood[3][0],
-            		DistModelVec[4][1] + ModelCood[3][1], 
-           			DistModelVec[4][2] + ModelCood[3][2]
+           			DistModelVec[3].x + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+            		DistModelVec[3].y + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
+           			DistModelVec[3].z + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
             			);
+           		
            		ModelCood[5] = new THREE.Vector3(
-           			DistModelVec[5][0] + ModelCood[4][0],
-            		DistModelVec[5][1] + ModelCood[4][1], 
-           			DistModelVec[5][2] + ModelCood[4][2]
-            			);
+           			DistModelVec[4].x + ModelCood[4].x,
+            		DistModelVec[4].y + ModelCood[4].y,
+           			DistModelVec[4].z + ModelCood[4].z
+           				);
            		ModelCood[6] = new THREE.Vector3(
-           			DistModelVec[6][0] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
-            		DistModelVec[6][1] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
-           			DistModelVec[6][2] + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
+           			DistModelVec[5].x + ModelCood[5].x,
+            		DistModelVec[5].y + ModelCood[5].y, 
+           			DistModelVec[5].z + ModelCood[5].z
             			);
            		ModelCood[7] = new THREE.Vector3(
-           			DistModelVec[7][0] + ModelCood[6][0],
-            		DistModelVec[7][1] + ModelCood[6][1], 
-           			DistModelVec[7][2] + ModelCood[6][2]
+           			DistModelVec[6].x + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x,
+            		DistModelVec[6].y + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y, 
+           			DistModelVec[6].z + vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
             			);
+           		
            		ModelCood[8] = new THREE.Vector3(
-           			DistModelVec[8][0] + ModelCood[7][0],
-            		DistModelVec[8][1] + ModelCood[7][1], 
-           			DistModelVec[8][2] + ModelCood[7][2]
-            			);
+           			DistModelVec[7].x + ModelCood[7].x,
+            		DistModelVec[7].y + ModelCood[7].y,
+           			DistModelVec[7].z + ModelCood[7].z
+           			);
            		ModelCood[9] = new THREE.Vector3(
-           			DistModelVec[9][0] + ModelCood[8][0],
-            		DistModelVec[9][1] + ModelCood[8][1], 
-           			DistModelVec[9][2] + ModelCood[8][2]
+           			DistModelVec[8].x + ModelCood[8].x,
+            		DistModelVec[8].y + ModelCood[8].y, 
+           			DistModelVec[8].z + ModelCood[8].z
             			);
            		ModelCood[10] = new THREE.Vector3(
-           			DistModelVec[10][0] + ModelCood[8][0],
-            		DistModelVec[10][1] + ModelCood[8][1], 
-           			DistModelVec[10][2] + ModelCood[8][2]
+           			DistModelVec[9].x + ModelCood[9].x,
+            		DistModelVec[9].y + ModelCood[9].y, 
+           			DistModelVec[9].z + ModelCood[9].z
             			);
            		ModelCood[11] = new THREE.Vector3(
-           			DistModelVec[11][0] + ModelCood[10][0],
-            		DistModelVec[11][1] + ModelCood[10][1], 
-           			DistModelVec[11][2] + ModelCood[10][2]
+           			DistModelVec[10].x + ModelCood[9].x,
+            		DistModelVec[10].y + ModelCood[9].y, 
+           			DistModelVec[10].z + ModelCood[9].z
             			);
            		ModelCood[12] = new THREE.Vector3(
-           			DistModelVec[12][0] + ModelCood[11][0],
-            		DistModelVec[12][1] + ModelCood[11][1], 
-           			DistModelVec[12][2] + ModelCood[11][2]
+           			DistModelVec[11].x + ModelCood[11].x,
+            		DistModelVec[11].y + ModelCood[11].y, 
+           			DistModelVec[11].z + ModelCood[11].z
             			);
            		ModelCood[13] = new THREE.Vector3(
-           			DistModelVec[13][0] + ModelCood[8][0],
-            		DistModelVec[13][1] + ModelCood[8][1], 
-           			DistModelVec[13][2] + ModelCood[8][2]
+           			DistModelVec[12].x + ModelCood[12].x,
+            		DistModelVec[12].y + ModelCood[12].y, 
+           			DistModelVec[12].z + ModelCood[12].z
             			);
            		ModelCood[14] = new THREE.Vector3(
-           			DistModelVec[14][0] + ModelCood[13][0],
-            		DistModelVec[14][1] + ModelCood[13][1], 
-           			DistModelVec[14][2] + ModelCood[13][2]
+           			DistModelVec[13].x + ModelCood[9].x,
+            		DistModelVec[13].y + ModelCood[9].y, 
+           			DistModelVec[13].z + ModelCood[9].z
             			);
            		ModelCood[15] = new THREE.Vector3(
-           			DistModelVec[15][0] + ModelCood[14][0],
-            		DistModelVec[15][1] + ModelCood[14][1], 
-           			DistModelVec[15][2] + ModelCood[14][2]
+           			DistModelVec[14].x + ModelCood[14].x,
+            		DistModelVec[14].y + ModelCood[14].y, 
+           			DistModelVec[14].z + ModelCood[14].z
+            			);
+           		ModelCood[16] = new THREE.Vector3(
+           			DistModelVec[15].x + ModelCood[15].x,
+            		DistModelVec[15].y + ModelCood[15].y, 
+           			DistModelVec[15].z + ModelCood[15].z
             			);
             	return ModelCood;
             }
@@ -277,88 +291,91 @@
             const loader = new THREE.GLTFLoader();
             loader.crossOrigin = 'anonymous';
             loader.load(
-                'sakura.vrm',
+                'assetts/AliciaSolid.vrm',
                 (gltf) => {
                     THREE.VRM.from(gltf).then((vrm) => {
                         scene.add(vrm.scene);
                         console.log(vrm);
 
                         let normvec = computeUnit(array);
+                        console.log(normvec);
                         let vrmlength = computeLength(vrm);
-                        let DistModelVec = computeDisModel(normvec,vrmlength);
-                        console.log(DistModelVec);
-                        let ModelCood = computeAddHipsCood(DistModelVec,vrm);
+                        console.log(vrmlength);
+                        console.log(normvec);
+                        let distmodelvec = computeDistModel(normvec,vrmlength);
+                        console.log(distmodelvec);
+                        let ModelCood = computeAddHipsCood(distmodelvec,vrm);
 
                         console.log(ModelCood);
 
                         //set bone position
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x = ModelCood[0][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y = ModelCood[0][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z = ModelCood[0][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.x = ModelCood[0].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.y = ModelCood[0].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z = ModelCood[0].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.x = ModelCood[1][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.y = ModelCood[1][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.z = ModelCood[1][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.x = ModelCood[1].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.y = ModelCood[1].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg).position.z = ModelCood[1].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.x = ModelCood[2][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.y = ModelCood[2][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.z = ModelCood[2][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.x = ModelCood[2].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.y = ModelCood[2].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg).position.z = ModelCood[2].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.x = ModelCood[3][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.y = ModelCood[3][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.z = ModelCood[3][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.x = ModelCood[3].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.y = ModelCood[3].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot).position.z = ModelCood[3].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.x = ModelCood[4][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.y = ModelCood[4][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.z = ModelCood[4][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.x = ModelCood[4].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.y = ModelCood[4].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg).position.z = ModelCood[4].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.x = ModelCood[5][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.y = ModelCood[5][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.z = ModelCood[5][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.x = ModelCood[5].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.y = ModelCood[5].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg).position.z = ModelCood[5].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.x = ModelCood[6][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.y = ModelCood[6][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.z = ModelCood[6][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.x = ModelCood[6].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.y = ModelCood[6].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position.z = ModelCood[6].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x = ModelCood[7][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y = ModelCood[7][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z = ModelCood[7][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.x = ModelCood[7].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.y = ModelCood[7].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position.z = ModelCood[7].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.x = ModelCood[8][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.y = ModelCood[8][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.z = ModelCood[8][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.x = ModelCood[8].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.y = ModelCood[8].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Chest).position.z = ModelCood[8].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x = ModelCood[9][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y = ModelCood[9][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z = ModelCood[9][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x = ModelCood[9].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y = ModelCood[9].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z = ModelCood[9].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.x = ModelCood[10][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.y = ModelCood[10][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.z = ModelCood[10][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.x = ModelCood[10].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.y = ModelCood[10].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.z = ModelCood[10].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.x = ModelCood[11][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.y = ModelCood[11][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.z = ModelCood[11][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.x = ModelCood[11].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.y = ModelCood[11].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm).position.z = ModelCood[11].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.x = ModelCood[12][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.y = ModelCood[12][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.z = ModelCood[12][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.x = ModelCood[12].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.y = ModelCood[12].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm).position.z = ModelCood[12].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.x = ModelCood[13][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.y = ModelCood[13][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.z = ModelCood[13][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.x = ModelCood[13].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.y = ModelCood[13].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position.z = ModelCood[13].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.x = ModelCood[14][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.y = ModelCood[14][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.z = ModelCood[14][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.x = ModelCood[14].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.y = ModelCood[14].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm).position.z = ModelCood[14].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.x = ModelCood[15][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.y = ModelCood[15][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.z = ModelCood[15][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.x = ModelCood[15].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.y = ModelCood[15].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm).position.z = ModelCood[15].z;
 
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.x = ModelCood[16][0];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.y = ModelCood[16][1];
-                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.z = ModelCood[16][2];
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.x = ModelCood[16].x;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.y = ModelCood[16].y;
+                        vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand).position.z = ModelCood[16].z;
 
 
                     });
