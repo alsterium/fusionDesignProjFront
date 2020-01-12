@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+    <style>
+      div {
+        position: relative;
+      }
+
+      canvas {
+        position: absolute;
+      }
+    </style>
     <script>
       window.onload = () => {
-        document.addEventListener("mousemove", draw);
+        document.addEventListener("mousemove", preview_layer);
+        document.addEventListener("mousedown", draw_to_lower);
         // draw();
       };
-      function draw(e) {
-        var canvas = document.getElementById("canvas");
+      function preview_layer(e) {
+        var canvas = document.getElementById("canvas_upper");
         var context = canvas.getContext("2d");
         var mouseCoordX = e.pageX;
         var mouseCoordY = e.pageY;
@@ -22,9 +32,22 @@
         context.fillStyle = "black";
         context.fillText("Hello World", mouseCoordX, mouseCoordY);
       }
+      function draw_to_lower(e) {
+        var canvas = document.getElementById("canvas_lower");
+        var context = canvas.getContext("2d");
+        var mouseCoordX = e.pageX;
+        var mouseCoordY = e.pageY;
+        context.font = "48px serif";
+        context.textAlign = "center";
+        context.fillStyle = "black";
+        context.fillText("Hello World", mouseCoordX, mouseCoordY);
+      }
     </script>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div>
+      <canvas id="canvas_upper"></canvas>
+      <canvas id="canvas_lower"></canvas>
+    </div>
   </body>
 </html>
