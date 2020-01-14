@@ -501,125 +501,125 @@
               let vrmlength = computeLength(vrm);
               console.log("VRM_Length");
               console.log(vrmlength);
-              let ModelCood = computeDistModel(normvec, vrmlength);
+              let distModelVec = computeDistModel(normvec, vrmlength);
               console.log("DistModelVector");
               // console.log(distmodelvec);
-            //   let ModelCood = computeAddHipsCood(distmodelvec, vrm);
+              let ModelCood = computeAddHipsCood(distModelVec, vrm);
               console.log("FinalCood");
               console.log(ModelCood);
 
               //   console.log(ModelCood);
 
-              //set bone position
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Hips
-              //).position.x = ModelCood[0].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Hips
-              //).position.y = ModelCood[0].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Hips
-              //).position.z = ModelCood[0].z;
+              // set bone position
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Hips
+              ).position.x = ModelCood[0].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Hips
+              ).position.y = ModelCood[0].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Hips
+              ).position.z = ModelCood[0].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
-              //).rotation.x = ModelCood[1].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
-              //).rotation.y = ModelCood[1].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
-              //).rotation.z = ModelCood[1].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
+              ).rotation.x = ModelCood[1].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
+              ).rotation.y = ModelCood[1].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightUpperLeg
+              ).rotation.z = ModelCood[1].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
-              //).rotation.x = ModelCood[2].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
-              //).rotation.y = ModelCood[2].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
-              //).rotation.z = ModelCood[2].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
+              ).rotation.x = ModelCood[2].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
+              ).rotation.y = ModelCood[2].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightLowerLeg
+              ).rotation.z = ModelCood[2].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightFoot
-              //).rotation.x = ModelCood[3].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightFoot
-              //).rotation.y = ModelCood[3].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.RightFoot
-              //).rotation.z = ModelCood[3].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightFoot
+              ).rotation.x = ModelCood[3].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightFoot
+              ).rotation.y = ModelCood[3].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.RightFoot
+              ).rotation.z = ModelCood[3].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
-              //).rotation.x = ModelCood[4].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
-              //).rotation.y = ModelCood[4].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
-              //).rotation.z = ModelCood[4].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
+              ).rotation.x = ModelCood[4].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
+              ).rotation.y = ModelCood[4].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg
+              ).rotation.z = ModelCood[4].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
-              //).rotation.x = ModelCood[5].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
-              //).rotation.y = ModelCood[5].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
-              //).rotation.z = ModelCood[5].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
+              ).rotation.x = ModelCood[5].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
+              ).rotation.y = ModelCood[5].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg
+              ).rotation.z = ModelCood[5].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftFoot
-              //).rotation.x = ModelCood[6].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftFoot
-              //).rotation.y = ModelCood[6].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.LeftFoot
-              //).rotation.z = ModelCood[6].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftFoot
+              ).rotation.x = ModelCood[6].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftFoot
+              ).rotation.y = ModelCood[6].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.LeftFoot
+              ).rotation.z = ModelCood[6].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Spine
-              //).rotation.x = ModelCood[7].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Spine
-              //).rotation.y = ModelCood[7].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Spine
-              //).rotation.z = ModelCood[7].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Spine
+              ).rotation.x = ModelCood[7].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Spine
+              ).rotation.y = ModelCood[7].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Spine
+              ).rotation.z = ModelCood[7].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Chest
-              //).rotation.x = ModelCood[8].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Chest
-              //).rotation.y = ModelCood[8].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Chest
-              //).rotation.z = ModelCood[8].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Chest
+              ).rotation.x = ModelCood[8].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Chest
+              ).rotation.y = ModelCood[8].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Chest
+              ).rotation.z = ModelCood[8].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Neck
-              //).rotation.x = ModelCood[9].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Neck
-              //).rotation.y = ModelCood[9].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Neck
-              //).rotation.z = ModelCood[9].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Neck
+              ).rotation.x = ModelCood[9].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Neck
+              ).rotation.y = ModelCood[9].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Neck
+              ).rotation.z = ModelCood[9].z;
 
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Head
-              //).rotation.x = ModelCood[10].x;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Head
-              //).rotation.y = ModelCood[10].y;
-              //vrm.humanoid.getBoneNode(
-              //  THREE.VRMSchema.HumanoidBoneName.Head
-              //).rotation.z = ModelCood[10].z;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Head
+              ).rotation.x = ModelCood[10].x;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Head
+              ).rotation.y = ModelCood[10].y;
+              vrm.humanoid.getBoneNode(
+               THREE.VRMSchema.HumanoidBoneName.Head
+              ).rotation.z = ModelCood[10].z;
 
               vrm.humanoid.getBoneNode(
                 THREE.VRMSchema.HumanoidBoneName.LeftUpperArm
