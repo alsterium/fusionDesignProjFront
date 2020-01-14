@@ -56,10 +56,10 @@
         </label> -->
             <div class="input-field">
                 <select>
-            <option value="" disabled selected>モデルを選択</option>
-            <option value="1">Model 1</option>
-            <option value="2">Model 2</option>
-          </select>
+                  <option value="" disabled selected col s12>モデルを選択</option>
+                  <option value="MikuMiku.vrm">Model 1</option>
+                  <option value="2">Model 2</option>
+                </select>
                 <label>chose model</label>
             </div>
             <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png">ポーズを決定</a
@@ -77,9 +77,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./script/vuescript.js"></script>
     <script>
-      $("document").ready(() => {
-        $("select").formSelect();
-      });
+      var elems ,instances;
+
+      //materializeのselectの初期化
+      document.addEventListener('DOMContentLoaded', initMaterialize);
+
+      function initMaterialize(){
+      elems = document.querySelectorAll('select');
+      instances = M.FormSelect.init(elems);
+}
+elems = document.querySelectorAll('select');
+instances = M.FormSelect.getInstance(elems);
+
+console.log(instances);
+
     </script>
   </body>
 </html>
