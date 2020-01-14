@@ -5,6 +5,12 @@
 // ページの読み込みを待つ
 window.addEventListener('load', init);
 
+window.onpageshow = function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  };
+
 function init() {
 
 
