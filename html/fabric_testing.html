@@ -21,9 +21,16 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.5.0/fabric.min.js"></script>
     <script>
-      window.onload = () => {
-        var canvas = new fabric.Canvas("canvas");
-        var stampText = "クソジジイ";
+
+      var canvas , stampText;
+
+      function initStampCanvas(){
+        canvas = new fabric.Canvas("canvas");
+        stampText = "おいっす";
+        updateText();
+      }
+
+      function updateText(){
         var upperText = new fabric.Text(stampText, {
           fontFamily: "Nico Moji",
           fontSize: 100,
@@ -55,6 +62,10 @@
         });
         canvas.add(textGroup);
       };
+      
+
+      window.onload = () => initStampCanvas();
+       
     </script>
   </head>
   <body>
