@@ -1,8 +1,0 @@
-html/sakura.vrm
-vm
-node_modules
-*.csr
-*.crt
-*.key
-*.pfx
-package-lock.json
