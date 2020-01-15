@@ -1,6 +1,6 @@
 //protoType
 
-array = [
+bonesArray = [
     [7.54516134791414, -21.768140173180647, -183.4596745057812],
     [-124.5336455982307, 2.415918621530429, -284.8569690566266],
     [-193.02280218024345, -134.14277584172567, -702.8368725045019],
@@ -26,15 +26,41 @@ array = [
   }
 
   //配列の要素をx,z,yからx,y,zに入れ替え
-  for (i = 0; i < array.length; i++) swap(array[i], 1, 2);
+  for (i = 0; i < bonesArray.length; i++) swap(bonesArray[i], 1, 2);
   //左手系を右手系に変換
-  for(i = 0;i<array.length;i++)array[i][0] *= -1;
+  for(i = 0;i<bonesArray.length;i++)bonesArray[i][0] *= -1;
 
+  /*var array_vec = new Array();
+  for(i = 0;i<array.length - 1;i++)
+    array_vec[i] = new Array();*/
+
+  //console.log(array[0][0]);
+
+  let NormVec = new Array();
+        NormVec[0] = new THREE.Vector3(bonesArray[1][0] - bonesArray[0][0], bonesArray[1][1] - bonesArray[0][1], bonesArray[1][2] - bonesArray[0][2]).normalize(); // rightUpperLeg
+        NormVec[1] = new THREE.Vector3(bonesArray[2][0] - bonesArray[1][0], bonesArray[2][1] - bonesArray[1][1], bonesArray[2][2] - bonesArray[1][2]).normalize(); // rightLowerLeg
+        NormVec[2] = new THREE.Vector3(bonesArray[3][0] - bonesArray[2][0], bonesArray[3][1] - bonesArray[2][1], bonesArray[3][2] - bonesArray[2][2]).normalize(); // rightFoot
+        NormVec[3] = new THREE.Vector3(bonesArray[4][0] - bonesArray[0][0], bonesArray[4][1] - bonesArray[0][1], bonesArray[4][2] - bonesArray[0][2]).normalize(); // leftUpperLeg
+        NormVec[4] = new THREE.Vector3(bonesArray[5][0] - bonesArray[4][0], bonesArray[5][1] - bonesArray[4][1], bonesArray[5][2] - bonesArray[4][2]).normalize(); // leftLowerLeg
+        NormVec[5] = new THREE.Vector3(bonesArray[6][0] - bonesArray[5][0], bonesArray[6][1] - bonesArray[5][1], bonesArray[6][2] - bonesArray[5][2]).normalize(); // leftFoot
+        NormVec[6] = new THREE.Vector3(bonesArray[7][0] - bonesArray[0][0], bonesArray[7][1] - bonesArray[0][1], bonesArray[7][2] - bonesArray[0][2]).normalize(); // spine
+        NormVec[7] = new THREE.Vector3(bonesArray[8][0] - bonesArray[6][0], bonesArray[8][1] - bonesArray[6][1], bonesArray[8][2] - bonesArray[6][2]).normalize(); // chest
+        NormVec[8] = new THREE.Vector3(bonesArray[9][0] - bonesArray[8][0], bonesArray[9][1] - bonesArray[8][1], bonesArray[9][2] - bonesArray[8][2]).normalize(); // neck
+        NormVec[9] = new THREE.Vector3(bonesArray[10][0] - bonesArray[9][0], bonesArray[10][1] - bonesArray[9][1], bonesArray[10][2] - bonesArray[9][2]).normalize(); // head
+        NormVec[10] = new THREE.Vector3(bonesArray[11][0] - bonesArray[9][0], bonesArray[11][1] - bonesArray[9][1], bonesArray[11][2] - bonesArray[9][2]).normalize(); // leftUpperArm
+        NormVec[11] = new THREE.Vector3(bonesArray[12][0] - bonesArray[11][0], bonesArray[12][1] - bonesArray[11][1], bonesArray[12][2] - bonesArray[11][2]).normalize(); // leftLowerArm
+        NormVec[12] = new THREE.Vector3(bonesArray[13][0] - bonesArray[12][0], bonesArray[13][1] - bonesArray[12][1], bonesArray[13][2] - bonesArray[12][2]).normalize(); // leftHand
+        NormVec[13] = new THREE.Vector3(bonesArray[14][0] - bonesArray[9][0], bonesArray[14][1] - bonesArray[9][1], bonesArray[14][2] - bonesArray[9][2]).normalize(); // rightUpperArm
+        NormVec[14] = new THREE.Vector3(bonesArray[15][0] - bonesArray[14][0], bonesArray[15][1] - bonesArray[14][1], bonesArray[15][2] - bonesArray[14][2]).normalize(); // rightLowerArm
+        NormVec[15] = new THREE.Vector3(bonesArray[16][0] - bonesArray[15][0], bonesArray[16][1] - bonesArray[15][1], bonesArray[16][2] - bonesArray[15][2]).normalize(); // rightHand
+  console.log(NormVec);
 
   function Calcquaternion(array){
+    console.log(array);
+
   	var up = new THREE.Vector3(0, 1, 0);
 
-  	var normalAxis = new THREE.Vector3(array[0], array[1], array[2]).normalize();
+  	var normalAxis = new THREE.Vector3(array.x, array.y, array.z);
 
   	var dir = new THREE.Vector3();
 
@@ -57,151 +83,66 @@ array = [
 
   var quater = new Array();
   quater = new THREE.Quaternion();
-  for(i = 0; i < array.length; i++){
-  	quater[i] = Calcquaternion(array[i]);
+  for(i = 0; i < NormVec.length; i++){
+  	quater[i] = Calcquaternion(NormVec[i]);
     console.log(quater[i]);
   }
 
-  console.log(quater[0].x);
+  console.log(quater);
 
   function createJsonPose(array){
     let jsonPose={
-       /* "hips":{
-            //"position":[quater[0].x, quater[0].y, quater[0].z],
-            "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
-        },
-        "rightUpperLeg":{
-            //"position":[quater[1].x, quater[1].y, quater[1].z],
-            "rotation":[quater[1].x, quater[1].y, quater[1].z, quater[1].w]
-        },
-        "rightLowerLeg":{
-            "position":[quater[2].x, quater[2].y, quater[2].z],
-            "rotation":[quater[2].w]
-        },
-        "rightFoot":{
-            "position":[quater[3].x, quater[3].y, quater[3].z],
-            "rotation":[quater[3].w]
-        },
-        "leftUpperLeg":{
-            "position":[quater[4].x, quater[4].y, quater[4].z],
-            "rotation":[quater[4].w]
-        },
-        "leftLowerLeg":{
-            "position":[quater[5].x, quater[5].y, quater[5].z],
-            "rotation":[quater[5].w]
-        },
-        "leftFoot":{
-            "position":[quater[6].x, quater[6].y, quater[6].z],
-            "rotation":[quater[6].w]
-        },
-        "spine":{
-            "position":[quater[7].x, quater[7].y, quater[7].z],
-            "rotation":[quater[7].w]
-        },
-        "chest":{
-            "position":[quater[8].x, quater[8].y, quater[8].z],
-            "rotation":[quater[8].w]
-        },
-        "neck":{
-            "position":[quater[9].x, quater[9].y, quater[9].z],
-            "rotation":[quater[9].w]
-        },
-        "head":{
-            "position":[quater[10].x, quater[10].y, quater[10].z],
-            "rotation":[quater[10].w]
-        },
-        "leftUpperArm":{
-            "position":[quater[11].x, quater[11].y, quater[11].z],
-            "rotation":[quater[11].w]
-        },
-        "leftLowerArm":{
-            "position":[quater[12].x, quater[12].y, quater[12].z],
-            "rotation":[quater[12].w]
-        },
-        "leftHand":{
-            "position":[quater[13].x, quater[13].y, quater[13].z],
-            "rotation":[quater[13].w]
-        },
-        "rightUpperArm":{
-            "position":[quater[14].x, quater[14].y, quater[14].z],
-            "rotation":[quater[14].w]
-        },
-        "rightLowerArm":{
-            "position":[quater[15].x, quater[15].y, quater[15].z],
-            "rotation":[quater[15].w]
-        },
-        "rightHand":{
-            "position":[quater[16].x, quater[16].y, quater[16].z],
-            "rotation":[quater[16].w]
-        },*/
 
          "hips":{
-            //"position":[quater[0].x, quater[0].y, quater[0].z],
-            "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
+            // "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
         },
         "rightUpperLeg":{
-            //"position":[quater[1].x, quater[1].y, quater[1].z],
-            "rotation":[quater[1].x, quater[1].y, quater[1].z, quater[1].w]
+            "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
         },
         "rightLowerLeg":{
-            //"position":[quater[2].x, quater[2].y, quater[2].z],
-            "rotation":[quater[2].x, quater[2].y, quater[2].z, quater[2].w]
+            "rotation":[quater[1].x, quater[1].y, quater[1].z, quater[1].w]
         },
         "rightFoot":{
-            //"position":[quater[3].x, quater[3].y, quater[3].z],
-            "rotation":[quater[3].x, quater[3].y, quater[3].z, quater[3].w]
+            "rotation":[quater[2].x, quater[2].y, quater[2].z, quater[2].w]
         },
         "leftUpperLeg":{
-            //"position":[quater[4].x, quater[4].y, quater[4].z],
-            "rotation":[quater[4].x, quater[4].y, quater[4].z, quater[4].w]
+            "rotation":[quater[3].x, quater[3].y, quater[3].z, quater[3].w]
         },
         "leftLowerLeg":{
-            //"position":[quater[5].x, quater[5].y, quater[5].z],
-            "rotation":[quater[5].x, quater[5].y, quater[5].z, quater[5].w]
+            "rotation":[quater[4].x, quater[4].y, quater[4].z, quater[4].w]
         },
         "leftFoot":{
-            //"position":[quater[6].x, quater[6].y, quater[6].z],
-            "rotation":[quater[6].x, quater[6].y, quater[6].z, quater[6].w]
+            "rotation":[quater[5].x, quater[5].y, quater[5].z, quater[5].w]
         },
         "spine":{
-            //"position":[quater[7].x, quater[7].y, quater[7].z],
-            "rotation":[quater[7].x, quater[7].y, quater[7].z, quater[7].w]
+            "rotation":[quater[6].x, quater[6].y, quater[6].z, quater[6].w]
         },
         "chest":{
-            //"position":[quater[8].x, quater[8].y, quater[8].z],
-            "rotation":[quater[8].x, quater[8].y, quater[8].z, quater[8].w]
+            "rotation":[quater[7].x, quater[7].y, quater[7].z, quater[7].w]
         },
         "neck":{
-            //"position":[quater[9].x, quater[9].y, quater[9].z],
-            "rotation":[quater[9].x, quater[9].y, quater[9].z, quater[9].w]
+            "rotation":[quater[8].x, quater[8].y, quater[8].z, quater[8].w]
         },
         "head":{
-            //"position":[quater[10].x, quater[10].y, quater[10].z],
-            "rotation":[quater[10].x, quater[10].y, quater[10].z, quater[10].w]
+            "rotation":[quater[9].x, quater[9].y, quater[9].z, quater[9].w]
         },
         "leftUpperArm":{
-            //"position":[quater[11].x, quater[11].y, quater[11].z],
-            "rotation":[quater[11].x, quater[11].y, quater[11].z, quater[11].w]
+            "rotation":[quater[10].x, quater[10].y, quater[10].z, quater[10].w]
         },
         "leftLowerArm":{
-            //"position":[quater[12].x, quater[12].y, quater[12].z],
-            "rotation":[quater[12].x, quater[12].y, quater[12].z, quater[12].w]
+            "rotation":[quater[11].x, quater[11].y, quater[11].z, quater[11].w]
         },
         "leftHand":{
-            //"position":[quater[13].x, quater[13].y, quater[13].z],
-            "rotation":[quater[13].x, quater[13].y, quater[13].z, quater[13].w]
+            "rotation":[quater[12].x, quater[12].y, quater[12].z, quater[12].w]
         },
         "rightUpperArm":{
-            //"position":[quater[14].x, quater[14].y, quater[14].z],
-            "rotation":[quater[14].x, quater[14].y, quater[14].z, quater[14].w]
+            "rotation":[quater[13].x, quater[13].y, quater[13].z, quater[13].w]
         },
         "rightLowerArm":{
-            //"position":[quater[15].x, quater[15].y, quater[15].z],
-            "rotation":[quater[15].x, quater[15].y, quater[15].z, quater[15].w]
+            "rotation":[quater[14].x, quater[14].y, quater[14].z, quater[14].w]
         },
-        "rightHand":{
-            //"position":[quater[16].x, quater[16].y, quater[16].z],
-            "rotation":[quater[16].x, quater[16].y, quater[16].z, quater[16].w]
+       "rightHand":{
+           "rotation":[quater[15].x, quater[15].y, quater[15].z, quater[15].w]
         },
       }
     /*jsonPose.hips.position = array[0];
@@ -225,7 +166,7 @@ array = [
     return jsonPose;
   }
 
-  var PoseData = createJsonPose(array);
+  var PoseData = createJsonPose(bonesArray);
 
   console.log(PoseData);
 
