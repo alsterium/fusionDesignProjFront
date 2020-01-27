@@ -92,19 +92,44 @@ function createJsonPose() {
   return jsonPose;
 }
 function setPoseFromQuarternion(QuatArray) {
-  let Pose = createJsonPose();
+  let Pose = {
 
-  Pose.rightUpperLeg.rotation = QuatArray[1];
-  Pose.rightLowerLeg.rotation = QuatArray[2];
-  Pose.leftUpperLeg.rotation = QuatArray[4];
-  Pose.leftLowerLeg.rotation = QuatArray[5];
-  Pose.spine.rotation = QuatArray[7];
-  Pose.chest.rotation = QuatArray[8];
-  Pose.neck.rotation = QuatArray[9];
-  Pose.leftUpperArm.rotation = QuatArray[11];
-  Pose.leftLowerArm.rotation = QuatArray[12];
-  Pose.rightUpperArm.rotation = QuatArray[14];
-  Pose.rightLowerArm.rotation = QuatArray[15];
+    "hips":{
+   },
+   "rightUpperLeg":{
+       "rotation":[QuatArray[1].x, QuatArray[1].y, QuatArray[1].z, QuatArray[1].w]
+   },
+   "rightLowerLeg":{
+       "rotation":[QuatArray[2].x, QuatArray[2].y, QuatArray[2].z, QuatArray[2].w]
+   },
+   "leftUpperLeg":{
+       "rotation":[QuatArray[4].x, QuatArray[4].y, QuatArray[4].z, QuatArray[4].w]
+   },
+   "leftLowerLeg":{
+       "rotation":[QuatArray[5].x, QuatArray[5].y, QuatArray[5].z, QuatArray[5].w]
+   },
+   "spine":{
+       "rotation":[QuatArray[7].x, QuatArray[7].y, QuatArray[7].z, QuatArray[7].w]
+   },
+   "chest":{
+       "rotation":[QuatArray[8].x, QuatArray[8].y, QuatArray[8].z, QuatArray[8].w]
+   },
+   "neck":{
+       "rotation":[QuatArray[9].x, QuatArray[9].y, QuatArray[9].z, QuatArray[9].w]
+   },
+   "leftUpperArm":{
+       "rotation":[QuatArray[11].x, QuatArray[11].y, QuatArray[11].z, QuatArray[11].w]
+   },
+   "leftLowerArm":{
+       "rotation":[QuatArray[12].x, QuatArray[12].y, QuatArray[12].z, QuatArray[12].w]
+   },
+   "rightUpperArm":{
+       "rotation":[QuatArray[14].x, QuatArray[14].y, QuatArray[14].z, QuatArray[14].w]
+   },
+   "rightLowerArm":{
+       "rotation":[QuatArray[15].x, QuatArray[15].y, QuatArray[15].z, QuatArray[15].w]
+   },
+ }
 
   return Pose;
 }
@@ -462,9 +487,7 @@ function loadVRM(currentModel) {
         // VRMモデルにPoseData(Json形式)のボーンデータを設定
         THREE.VRM.from(gltf).then(vrm => {
           let pose = convertPose(openPoseDataArray, vrm);
-          console.log(pose);
           vrm.humanoid.setPose(pose);
-          console.log(vrm);
         });
       });
     },
