@@ -1,57 +1,60 @@
 :root {
-    --object-width: 400px;
+  --object-width: 400px;
 }
 
 body {
-    background: snow;
+  background: snow;
 }
 
 .btn {
-    margin: 10px;
+  margin: 10px;
 }
 
 .input-field {
-    width: 100%;
-    border: 3px;
-    padding: 15px;
+  width: 100%;
+  border: 3px;
+  padding: 15px;
 }
 
 .card {
-    width: 100%;
-    max-width: var(--object-width);
-    text-align: center;
+  width: 100%;
+  max-width: var(--object-width);
+  text-align: center;
 }
 
-.select-wrapper+label {
-    margin: 13px;
+.select-wrapper + label {
+  margin: 13px;
 }
 
 .adjust-box {
-    position: relative;
-    width: 100%;
-    height: auto;
-    background: #EEE;
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: #eee;
 }
 .box-1x1:before {
-    content: "";
-    display: block;
-    padding-top: 100%;
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 #model_preview {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #app {
-    max-width: var(--object-width);
-    margin: 0 auto;
+  max-width: var(--object-width);
+  margin: 0 auto;
 }
 
 video {
-    max-width: var(--object-width);
-    max-height: var(--object-width);
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: var(--object-width);
+  max-height: var(--object-width);
 }
