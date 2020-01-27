@@ -1,0 +1,22 @@
+/*
+ * https1.js
+ * Copyright (C) 2014 kaoru <kaoru@bsd>
+ */
+var https = require('https');
+var fs = require('fs');
+var ssl_server_key = 'server_key.pem';
+var ssl_server_crt = 'server_crt.pem';
+var port = 8443;
+
+var options = {
+    key: fs.readFileSync(ssl_server_key),
+    cert: fs.readFileSync(ssl_server_crt)
+};
+
+https.createServer(options, function(req, res) {
+    fs.readFile('./html/moc.html', 'UTF-8', function(err, data) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(data);
+    })
+
+}).listen(port);
