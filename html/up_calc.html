@@ -380,53 +380,53 @@
                     // "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
                 },
                 "rightUpperLeg":{
-                    "rotation":[quater[0].x, quater[0].y, quater[0].z, quater[0].w]
-                },
-                "rightLowerLeg":{
                     "rotation":[quater[1].x, quater[1].y, quater[1].z, quater[1].w]
                 },
-                "rightFoot":{
+                "rightLowerLeg":{
                     "rotation":[quater[2].x, quater[2].y, quater[2].z, quater[2].w]
                 },
+                // "rightFoot":{
+                //     "rotation":[quater[2].x, quater[2].y, quater[2].z, quater[2].w]
+                // },
                 "leftUpperLeg":{
-                    "rotation":[quater[3].x, quater[3].y, quater[3].z, quater[3].w]
-                },
-                "leftLowerLeg":{
                     "rotation":[quater[4].x, quater[4].y, quater[4].z, quater[4].w]
                 },
-                "leftFoot":{
+                "leftLowerLeg":{
                     "rotation":[quater[5].x, quater[5].y, quater[5].z, quater[5].w]
                 },
+                // "leftFoot":{
+                //     "rotation":[quater[5].x, quater[5].y, quater[5].z, quater[5].w]
+                // },
                 "spine":{
-                    "rotation":[quater[6].x, quater[6].y, quater[6].z, quater[6].w]
-                },
-                "chest":{
                     "rotation":[quater[7].x, quater[7].y, quater[7].z, quater[7].w]
                 },
-                "neck":{
+                "chest":{
                     "rotation":[quater[8].x, quater[8].y, quater[8].z, quater[8].w]
                 },
-                "head":{
+                "neck":{
                     "rotation":[quater[9].x, quater[9].y, quater[9].z, quater[9].w]
                 },
+                // "head":{
+                //     "rotation":[quater[9].x, quater[9].y, quater[9].z, quater[9].w]
+                // },
                 "leftUpperArm":{
-                    "rotation":[quater[10].x, quater[10].y, quater[10].z, quater[10].w]
-                },
-                "leftLowerArm":{
                     "rotation":[quater[11].x, quater[11].y, quater[11].z, quater[11].w]
                 },
-                "leftHand":{
+                "leftLowerArm":{
                     "rotation":[quater[12].x, quater[12].y, quater[12].z, quater[12].w]
                 },
+              //   "leftHand":{
+              //       "rotation":[quater[12].x, quater[12].y, quater[12].z, quater[12].w]
+              //   },
                 "rightUpperArm":{
-                    "rotation":[quater[13].x, quater[13].y, quater[13].z, quater[13].w]
-                },
-                "rightLowerArm":{
                     "rotation":[quater[14].x, quater[14].y, quater[14].z, quater[14].w]
                 },
-               "rightHand":{
-                   "rotation":[quater[15].x, quater[15].y, quater[15].z, quater[15].w]
+                "rightLowerArm":{
+                    "rotation":[quater[15].x, quater[15].y, quater[15].z, quater[15].w]
                 },
+              //  "rightHand":{
+              //      "rotation":[quater[15].x, quater[15].y, quater[15].z, quater[15].w]
+              //   },
               }
 
             return jsonPose;
@@ -465,7 +465,7 @@
               //console.log(ModelCood);
 
               var PoseData = createJsonPose(quater);
-
+              console.log(PoseData);
               THREE.VRM.from(gltf).then((vrm)=>{
                     vrm.humanoid.setPose(PoseData);
                 })
