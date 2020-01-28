@@ -64,54 +64,85 @@
         ></video>
       </div>
       <div class="card">
-        <div v-show="!stampEditMode">
-          <!-- 姿勢推定モード -->
-          <a class="btn" @click="activateCamera">カメラを起動</a>
-          <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
-          <a
-            class="btn-floating waves-effect btn-large waves-light red"
-            v-on:click="toggleCamera"
-            v-if="!toggleView"
-            v-show="!stampEditMode"
-            ><i class="material-icons">switch_camera</i></a
-          >
-          <!-- <label class="btn">
-            写真を選択
-            <input type="file" style="display: none;" />
-          </label> -->
-          <div class="input-field">
-            <select>
-              <option value="" disabled selected col s12>モデルを選択</option>
-              <option value="MikuMiku.vrm">Model 1</option>
-              <option value="2">Model 2</option>
-            </select>
-            <label>chose model</label>
+        <div class="row">
+          <div v-show="!stampEditMode">
+            <!-- 姿勢推定モード -->
+            <a class="btn" @click="activateCamera">カメラを起動</a>
+            <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
+            <a
+              class="btn-floating waves-effect btn-large waves-light red"
+              v-on:click="toggleCamera"
+              v-if="!toggleView"
+              v-show="!stampEditMode"
+              ><i class="material-icons">switch_camera</i></a
+            >
+            <!-- <label class="btn">
+              写真を選択
+              <input type="file" style="display: none;" />
+            </label> -->
+            <div class="input-field col">
+              <select>
+                <option value="" disabled selected>モデルを選択</option>
+                <option value="MikuMiku.vrm">Model 1</option>
+                <option value="2">Model 2</option>
+              </select>
+              <label>chose model</label>
+            </div>
+            <a class="btn" @click="toggleStampEditMode">ポーズを決定</a>
+            <!-- <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png"
+              >ポーズを決定</a
+            > -->
           </div>
-          <a class="btn" @click="toggleStampEditMode">ポーズを決定</a>
-          <!-- <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png"
-            >ポーズを決定</a
-          > -->
-        </div>
-        <div v-show="stampEditMode">
-          <!-- スタンプ作成モード -->
-          <div class="input-field">
-            <input id="stampText" type="text" class="validate" />
-            <label for="stampText">文字を入力</label>
-            <ul class="collapsible z-depth-1">
-              <li>
-                <div class="collapsible-header"><i class="material-icons">format_size</i>TextStyle</div>
-                <div class="collapsible-body">
-                  <form action="#">
-                    <span>Red<p class="range-field"><input type="range" id="textRed" min="0" max="100"></p></span> 
-                    <span>Blue<p class="range-field"><input type="range" id="textBlue" min="0" max="100"></p></span> 
-                    <span>Green<p class="range-field"><input type="range" id="textGreen" min="0" max="100"></p></span> 
-                  </form>
-                </div>
-              </li>
-            </ul>
-            <a class="btn">完成！</a>
+          <div v-show="stampEditMode">
+            <!-- スタンプ作成モード -->
+            <div class="input-field">
+              <div class="col 5">
+                <input id="stampText" type="text" class="validate" />
+                <label for="stampText">文字を入力</label>
+              </div>
+              <div class="col 5">
+                <ul class="collapsible z-depth-1">
+                  <li>
+                    <div class="collapsible-header">
+                      <i class="material-icons">format_size</i>TextStyle
+                    </div>
+                    <div class="collapsible-body">
+                      <form action="#">
+                        <span
+                          >Red
+                          <p class="range-field">
+                            <input type="range" id="textRed" min="0" max="100" /></p
+                        ></span>
+                        <span
+                          >Blue
+                          <p class="range-field">
+                            <input
+                              type="range"
+                              id="textBlue"
+                              min="0"
+                              max="100"
+                            /></p
+                        ></span>
+                        <span
+                          >Green
+                          <p class="range-field">
+                            <input
+                              type="range"
+                              id="textGreen"
+                              min="0"
+                              max="100"
+                            /></p
+                        ></span>
+                      </form>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <a class="btn">完成！</a>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
