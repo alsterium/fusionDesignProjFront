@@ -2,6 +2,7 @@ new Vue({
     el: "#app",
     data: {
         toggleView: true,
+        stampEditMode:false,
         facingValue: "environment",
     },
     methods: {
@@ -47,6 +48,9 @@ new Vue({
                 this.initCamera();
             }
             console.log(this.facingValue);
+        },
+        toggleStampEditMode:function(){
+            this.stampEditMode = !this.stampEditMode;
         }
     }
 });

@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" href="./css/style.css" />
     <title>Emoji Stamp Maker</title>
-</head>
+  </head>
 
   <body>
     <!-- <div class="row"> -->
@@ -50,46 +50,68 @@
 
     <div id="app">
       <div class="adjust-box box-1x1">
-        <canvas id="model_preview" class="card" v-show="toggleView"></canvas>
+        <canvas
+          id="model_preview"
+          class="card"
+          v-show="toggleView && !stampEditMode"
+        ></canvas>
         <video
           id="cam_preview"
           autoplay
           playsinline="true"
           v-show="!toggleView"
+          v-show="!stampEditMode"
         ></video>
       </div>
       <div class="card">
-        <input
-          class="btn"
-          type="button"
-          value="カメラを起動"
-          v-on:click="activateCamera"
-        />
-        <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
-
-        <a
-          class="btn-floating waves-effect btn-large waves-light red"
-          v-on:click="toggleCamera"
-          v-if="!toggleView"
-          ><i class="material-icons">switch_camera</i></a
-        >
-
-        <!-- <label class="btn">
-          写真を選択
-          <input type="file" style="display: none;" />
-        </label> -->
-
-
-            <div class="input-field">
-                <select>
-                  <option value="" disabled selected col s12>モデルを選択</option>
-                  <option value="MikuMiku.vrm">Model 1</option>
-                  <option value="2">Model 2</option>
-                </select>
-                <label>chose model</label>
-            </div>
-            <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png">ポーズを決定</a
-        >
+        <div v-show="!stampEditMode">
+          <!-- 姿勢推定モード -->
+          <a class="btn" @click="activateCamera">カメラを起動</a>
+          <!-- <input class="btn" type="button" value="カメラの切り替え" v-on:click="toggleCamera" v-if="!toggleView" /> -->
+          <a
+            class="btn-floating waves-effect btn-large waves-light red"
+            v-on:click="toggleCamera"
+            v-if="!toggleView"
+            v-show="!stampEditMode"
+            ><i class="material-icons">switch_camera</i></a
+          >
+          <!-- <label class="btn">
+            写真を選択
+            <input type="file" style="display: none;" />
+          </label> -->
+          <div class="input-field">
+            <select>
+              <option value="" disabled selected col s12>モデルを選択</option>
+              <option value="MikuMiku.vrm">Model 1</option>
+              <option value="2">Model 2</option>
+            </select>
+            <label>chose model</label>
+          </div>
+          <a class="btn" @click="toggleStampEditMode">ポーズを決定</a>
+          <!-- <a class="btn" v-on:click="grabImage" id="dllink" download="canvas.png"
+            >ポーズを決定</a
+          > -->
+        </div>
+        <div v-show="stampEditMode">
+          <!-- スタンプ作成モード -->
+          <div class="input-field">
+            <input id="stampText" type="text" class="validate" />
+            <label for="stampText">文字を入力</label>
+            <ul class="collapsible z-depth-1">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">format_size</i>TextStyle</div>
+                <div class="collapsible-body">
+                  <form action="#">
+                    <span>Red<p class="range-field"><input type="range" id="textRed" min="0" max="100"></p></span> 
+                    <span>Blue<p class="range-field"><input type="range" id="textBlue" min="0" max="100"></p></span> 
+                    <span>Green<p class="range-field"><input type="range" id="textGreen" min="0" max="100"></p></span> 
+                  </form>
+                </div>
+              </li>
+            </ul>
+            <a class="btn">完成！</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -103,20 +125,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./script/vuescript.js"></script>
     <script>
-      var elems ,instances;
-
       //materializeのselectの初期化
-      document.addEventListener('DOMContentLoaded', initMaterialize);
+      document.addEventListener("DOMContentLoaded", initMaterialize);
 
-      function initMaterialize(){
-      elems = document.querySelectorAll('select');
-      instances = M.FormSelect.init(elems);
-}
-elems = document.querySelectorAll('select');
-instances = M.FormSelect.getInstance(elems);
+      function initMaterialize() {
+        var elems, instances;
+        elems = document.querySelectorAll("select");
+        instances = M.FormSelect.init(elems);
 
-console.log(instances);
-
+        elems = document.querySelectorAll(".collapsible");
+        instances = M.Collapsible.init(elems);
+      }
     </script>
   </body>
 </html>
