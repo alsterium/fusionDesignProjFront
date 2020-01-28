@@ -74,63 +74,7 @@ function swap(a, x, y) {
   a[x] = [a[y], (a[y] = a[x])][0];
   return a;
 }
-//openposeの配列をJson形式(連想配列)に変換
-// function createJsonPose() {
-//   let jsonPose = {
-//     hips: {
-//       rotation: []
-//     },
-//     rightUpperLeg: {
-//       rotation: []
-//     },
-//     rightLowerLeg: {
-//       rotation: []
-//     },
-//     rightFoot: {
-//       rotation: []
-//     },
-//     leftUpperLeg: {
-//       rotation: []
-//     },
-//     leftLowerLeg: {
-//       rotation: []
-//     },
-//     leftFoot: {
-//       rotation: []
-//     },
-//     spine: {
-//       rotation: []
-//     },
-//     chest: {
-//       rotation: []
-//     },
-//     neck: {
-//       rotation: []
-//     },
-//     head: {
-//       rotation: []
-//     },
-//     leftUpperArm: {
-//       rotation: []
-//     },
-//     leftLowerArm: {
-//       rotation: []
-//     },
-//     leftHand: {
-//       rotation: []
-//     },
-//     rightUpperArm: {
-//       rotation: []
-//     },
-//     rightLowerArm: {
-//       rotation: []
-//     },
-//     rightHand: {
-//       rotation: []
-//     }
-//   };
-//   return jsonPose;
-// }
+
 function setPoseFromQuarternion(QuatArray) {
   let Pose = {
     hips: {},
@@ -182,9 +126,6 @@ function setPoseFromQuarternion(QuatArray) {
         QuatArray[9].w
       ]
     },
-    // "jaw":{
-    //     "rotation":[QuatArray[9].x, QuatArray[9].y, QuatArray[9].z, QuatArray[9].w]
-    // },
     leftUpperArm: {
       rotation: [
         QuatArray[11].x,
@@ -311,234 +252,12 @@ function computeUnit(bonesArray) {
   return NormVec;
 }
 
-function computeVector(vrm) {
-  let vrmVector = new Array();
-  vrmVector[0] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
-  ).normalize();
-  vrmVector[1] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperLeg)
-        .position.z
-  ).normalize();
-  vrmVector[2] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightFoot)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerLeg)
-        .position.z
-  ).normalize();
-  vrmVector[3] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
-  ).normalize();
-  vrmVector[4] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperLeg)
-        .position.z
-  ).normalize();
-  vrmVector[5] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position
-      .x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position
-      .y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftFoot).position
-      .z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerLeg)
-        .position.z
-  ).normalize();
-  vrmVector[6] = new THREE.Vector3(
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-      .x +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .x,
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-      .y +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position
-        .y,
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-      .z +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.z
-  ).normalize(); //ここ本当に謎
-  vrmVector[7] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Spine).position
-        .z
-  ).normalize();
-  vrmVector[8] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Jaw).position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Jaw).position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Jaw).position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-  ).normalize();
-  vrmVector[9] = new THREE.Vector3(
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position
-      .x +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .x,
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position
-      .y +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .y,
-    -vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position
-      .z +
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-  ).normalize(); //ここも謎
-  vrmVector[10] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-  ).normalize();
-  vrmVector[11] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftUpperArm)
-        .position.z
-  ).normalize();
-  vrmVector[12] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position
-      .x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position
-      .y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftHand).position
-      .z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.LeftLowerArm)
-        .position.z
-  ).normalize();
-  vrmVector[13] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position
-        .y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-  ).normalize();
-  vrmVector[14] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightUpperArm)
-        .position.z
-  ).normalize();
-  vrmVector[15] = new THREE.Vector3(
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand)
-      .position.x -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-        .position.x,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand)
-      .position.y -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-        .position.y,
-    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightHand)
-      .position.z -
-      vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.RightLowerArm)
-        .position.z
-  ).normalize();
-  /*vrmVector[16] = new THREE.Vector3(
-                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.x - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.x,
-                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.y - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.y,
-                    vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Head).position.z - vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Neck).position.z
-                ).length();*/
-
-  return vrmVector;
-}
-
 function calcquaternion(normvec,up) {
   var q = new THREE.Quaternion();
   return q.setFromUnitVectors(up,normvec);
 }
 
-function convertPose(OpenPoseData, VRM) {
+function convertPose(OpenPoseData) {
   let up = new Array();
   up[0] = new THREE.Vector3(0,1,0);
   up[1] = new THREE.Vector3(0,-1,0);
@@ -563,7 +282,6 @@ function convertPose(OpenPoseData, VRM) {
   for (i = 0; i < OpenPoseData.length; i++) OpenPoseData[i][0] *= -1;
 
   let normVec = computeUnit(OpenPoseData);
-  let vrmNormVec = computeVector(VRM);
   let quat = new THREE.Quaternion();
   for (let i = 0; i < normVec.length; i++)
     quat[i] = calcquaternion(normVec[i],up[i]);
@@ -583,7 +301,7 @@ function loadVRM(currentModel) {
         console.log(vrm);
         // VRMモデルにPoseData(Json形式)のボーンデータを設定
         THREE.VRM.from(gltf).then(vrm => {
-          let pose = convertPose(openPoseDataArray,vrm);
+          let pose = convertPose(openPoseDataArray);
           vrm.humanoid.setPose(pose);
         });
       });
