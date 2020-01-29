@@ -317,6 +317,7 @@ function loadVRM(currentModel) {
 }
 //Three.jsの初期化関数
 function init() {
+
   //create renderer
   renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector("#model_preview"),

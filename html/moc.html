@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- loading-libraries -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.5.0/fabric.min.js"></script>
+
     <script src="../lib/three.min.js"></script>
     <script src="../lib/three-vrm.min.js"></script>
     <script src="../lib/GLTFLoader.js"></script>
@@ -24,8 +26,13 @@
       href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"
+      rel="stylesheet"
+    />
 
     <script src="./script/threeJSscript.js"></script>
+    <script src="./script/stampScript.js"></script>
 
     <link rel="stylesheet" href="./css/style.css" />
     <title>Emoji Stamp Maker</title>
@@ -50,18 +57,20 @@
 
     <div id="app">
       <div class="adjust-box box-1x1">
+        <canvas id="stampCanvas_upper" width="400" height="400"v-show="stampEditMode"></canvas>
+
         <canvas
-          id="model_preview"
-          class="card"
-          v-show="toggleView && !stampEditMode"
+        id="model_preview"
+        v-show="toggleView && !stampEditMode"
         ></canvas>
         <video
-          id="cam_preview"
-          autoplay
-          playsinline="true"
-          v-show="!toggleView"
-          v-show="!stampEditMode"
+        id="cam_preview"
+        autoplay
+        playsinline="true"
+        v-show="!toggleView"
+        v-show="!stampEditMode"
         ></video>
+        <canvas id="stampCanvas_lower" v-show="stampEditMode"></canvas>
       </div>
       <div class="card">
         <div class="row">
@@ -111,7 +120,12 @@
                         <span
                           >Red
                           <p class="range-field">
-                            <input type="range" id="textRed" min="0" max="100" /></p
+                            <input
+                              type="range"
+                              id="textRed"
+                              min="0"
+                              max="100"
+                            /></p
                         ></span>
                         <span
                           >Blue
@@ -142,7 +156,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 

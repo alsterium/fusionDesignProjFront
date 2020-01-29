@@ -51,6 +51,8 @@ new Vue({
         },
         toggleStampEditMode:function(){
             this.stampEditMode = !this.stampEditMode;
+            initStampCanvas();
+
         }
     }
 });
