@@ -7,15 +7,18 @@ new Vue({
   },
   methods: {
     grabImage: function() {
+      //Canvas要素を画像としてダウンロード
       let canvas = document.getElementById("model_preview");
       let link = document.getElementById("dllink");
       link.href = canvas.toDataURL();
     },
     activateCamera: function() {
+      
       this.toggleView = !this.toggleView;
       if (this.toggleView != true) this.initCamera();
     },
     initCamera: function() {
+      //カメラを有効化
       var video = document.getElementById("cam_preview");
 
       /*camera settings*/
@@ -39,6 +42,7 @@ new Vue({
         });
     },
     toggleCamera: function() {
+      //インカメラとアウトカメラを切り替える
       if (this.facingValue === "environment") {
         this.facingValue = "user";
         this.initCamera();
@@ -49,15 +53,13 @@ new Vue({
       console.log(this.facingValue);
     },
     toggleStampEditMode: function() {
+      //スタンプ編集モードへ移行
       var modelPrevData = document.querySelector("#model_preview");
       var stampBG = document.querySelector("#stampCanvas_lower");
 
-      //   var context = modelPrevData.getContext("2d");
       var context = modelPrevData.getContext("webgl");//モデルを表示している部分はwebglコンテキスト（泣き）
-      console.log(context);
 
       stampBG.getContext("2d").drawImage(modelPrevData, 0, 0);
-
       this.$nextTick(() => initStampCanvas()); //DOMレンダリングが更新されたタイミングで呼び出されるコールバック関数
       this.stampEditMode = true;
     }

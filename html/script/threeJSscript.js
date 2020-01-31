@@ -164,7 +164,6 @@ function setPoseFromQuarternion(QuatArray) {
 }
 
 // 入力されたボーンの単位ベクトルを求める
-
 function computeUnit(bonesArray) {
   // console.log(bonesArray);
   let NormVec = new Array();
@@ -251,13 +250,14 @@ function computeUnit(bonesArray) {
 
   return NormVec;
 }
-
+//クォータニオンを求める
 function calcquaternion(normvec,up) {
   var q = new THREE.Quaternion();
   return q.setFromUnitVectors(up,normvec);
 }
-
+//OpenPoseデータから回転制御形式のポーズデータを求める
 function convertPose(OpenPoseData) {
+  //ボーンノードごとの上方向ベクトルの設定
   let up = new Array();
   up[0] = new THREE.Vector3(0,1,0);
   up[1] = new THREE.Vector3(0,-1,0);
@@ -280,11 +280,13 @@ function convertPose(OpenPoseData) {
   for (i = 0; i < OpenPoseData.length; i++) swap(OpenPoseData[i], 1, 2);
   //左手系を右手系に変換
   for (i = 0; i < OpenPoseData.length; i++) OpenPoseData[i][0] *= -1;
-
+  //単位ベクトルを算出
   let normVec = computeUnit(OpenPoseData);
   let quat = new THREE.Quaternion();
+  //各ノードごとの回転角度（クォータニオン）を算出
   for (let i = 0; i < normVec.length; i++)
     quat[i] = calcquaternion(normVec[i],up[i]);
+  //ポーズを返す
   return setPoseFromQuarternion(quat);
 }
 
