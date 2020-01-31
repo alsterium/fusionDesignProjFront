@@ -59,6 +59,12 @@ div.canvas-container{
   margin: 0 auto;
 }
 
+canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 video {
   position: absolute;
   top: 0;

@@ -57,8 +57,9 @@
 
     <div id="app">
       <div class="adjust-box box-1x1">
-        <canvas id="stampCanvas_upper" width="400" height="400"v-show="stampEditMode"></canvas>
-
+        <canvas id="stampCanvas_lower" width="400" height="400" ></canvas>
+        <canvas id="stampCanvas_upper" width="400" height="400" ></canvas>
+        
         <canvas
         id="model_preview"
         v-show="toggleView && !stampEditMode"
@@ -67,10 +68,8 @@
         id="cam_preview"
         autoplay
         playsinline="true"
-        v-show="!toggleView"
-        v-show="!stampEditMode"
+        v-show="!toggleView && !stampEditMode"
         ></video>
-        <canvas id="stampCanvas_lower" v-show="stampEditMode"></canvas>
       </div>
       <div class="card">
         <div class="row">
