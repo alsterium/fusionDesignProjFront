@@ -10,14 +10,13 @@ new Vue({
       console.log("aa");
       var canvas = document.querySelector("#stampCanvas_lower");
       var stampBG = document.querySelector("#stampCanvas_upper");
-      
+
       console.log(canvas);
-      var context = canvas.getContext('2d');
+      var context = canvas.getContext("2d");
       context.drawImage(stampBG, 0, 0);
       console.log(context);
       let link = document.getElementById("dllink");
       link.href = canvas.toDataURL();
-
     },
     activateCamera: function() {
       this.toggleView = !this.toggleView;
@@ -61,13 +60,13 @@ new Vue({
       var stampBG = document.querySelector("#stampCanvas_lower");
 
       //   var context = modelPrevData.getContext("2d");
-      var context = modelPrevData.getContext("webgl");//モデルを表示している部分はwebglコンテキスト（泣き）
+      var context = modelPrevData.getContext("webgl"); //モデルを表示している部分はwebglコンテキスト（泣き）
       console.log(context);
 
-      stampBG.getContext("2d").drawImage(modelPrevData, 0, 0);
+      stampBG.getContext("2d").drawImage(modelPrevData, 0, 0, 400, 400);
 
       this.$nextTick(() => initStampCanvas()); //DOMレンダリングが更新されたタイミングで呼び出されるコールバック関数
       this.stampEditMode = true;
-    },
+    }
   }
 });
