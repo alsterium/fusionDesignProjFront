@@ -17,14 +17,14 @@ body {
 } */
 
 .card {
-  width: 100%;
+  /* width: 100%; */
   max-width: var(--object-width);
   text-align: center;
 }
 
-.select-wrapper + label {
+/* .select-wrapper + label {
   margin: 13px;
-}
+} */
 
 .adjust-box {
   position: relative;
@@ -71,4 +71,9 @@ video {
   left: 0;
   max-width: var(--object-width);
   max-height: var(--object-width);
+}
+
+.caret {
+  visibility: hidden;
+  position: absolute;
 }
