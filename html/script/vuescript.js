@@ -7,9 +7,17 @@ new Vue({
   },
   methods: {
     grabImage: function() {
-      let canvas = document.getElementById("model_preview");
+      console.log("aa");
+      var canvas = document.querySelector("#stampCanvas_lower");
+      var stampBG = document.querySelector("#stampCanvas_upper");
+      
+      console.log(canvas);
+      var context = canvas.getContext('2d');
+      context.drawImage(stampBG, 0, 0);
+      console.log(context);
       let link = document.getElementById("dllink");
       link.href = canvas.toDataURL();
+
     },
     activateCamera: function() {
       this.toggleView = !this.toggleView;
@@ -60,6 +68,6 @@ new Vue({
 
       this.$nextTick(() => initStampCanvas()); //DOMレンダリングが更新されたタイミングで呼び出されるコールバック関数
       this.stampEditMode = true;
-    }
+    },
   }
 });
