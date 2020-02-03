@@ -13,7 +13,7 @@ new Vue({
 
       console.log(canvas);
       var context = canvas.getContext("2d");
-      context.drawImage(stampBG, 0, 0);
+      context.drawImage(stampBG, 0, 0, 400, 400);
       console.log(context);
       let link = document.getElementById("dllink");
       link.href = canvas.toDataURL();
