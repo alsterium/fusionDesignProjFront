@@ -67,6 +67,9 @@ new Vue({
 
       this.$nextTick(() => initStampCanvas()); //DOMレンダリングが更新されたタイミングで呼び出されるコールバック関数
       this.stampEditMode = true;
+    },
+    changeTextColor: function(str){
+      updateText(str);
     }
   }
 });

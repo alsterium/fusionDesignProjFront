@@ -1,18 +1,25 @@
+var stampCanvas;
+
 function initStampCanvas() {
-  var canvas;
   //Canvasの初期化
-  canvas = new fabric.Canvas("stampCanvas_upper");
+  stampCanvas = new fabric.Canvas("stampCanvas_upper");
   var fontStyle = {
-    font: "NicoMoji",
+    font: "Nico Moji",
     size: 100,
     originX: "center",
-    originY: "center"
+    originY: "center",
+    text:"おいっす"
   };
   var textGroup = create_bag_character(fontStyle);
-  canvas.add(textGroup);
+  stampCanvas.add(textGroup);
 }
 //テキストの更新
-function updateText() {}
+function updateText(str) {
+  console.log(stampCanvas.getActiveObject()._objects);
+  // stampCanvas.clear();
+
+  console.log(str);
+}
 
 function create_bag_character(font_style) {
   //袋文字を作るためのテキスト
