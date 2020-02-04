@@ -15,9 +15,9 @@ function initStampCanvas() {
 }
 //テキストの更新
 function updateText(str) {
-  console.log(stampCanvas.getActiveObject()._objects);
+  stampCanvas.getActiveObject()._objects[2].setColor(str);
   // stampCanvas.clear();
-
+  stampCanvas.requestRenderAll();
   console.log(str);
 }
 

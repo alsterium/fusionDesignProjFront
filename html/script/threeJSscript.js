@@ -77,7 +77,14 @@ function swap(a, x, y) {
 
 function setPoseFromQuarternion(QuatArray) {
   let Pose = {
-    hips: {},
+    hips: {
+      rotation:[
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
     rightUpperLeg: {
       rotation: [
         QuatArray[1].x,
@@ -354,13 +361,13 @@ function init() {
   //VRMを読み込む
   loadVRM(currentModel);
 
-  //helpers
-  const gridHelper = new THREE.GridHelper(10, 10);
-  scene.add(gridHelper);
+  // //helpers
+  // const gridHelper = new THREE.GridHelper(10, 10);
+  // scene.add(gridHelper);
 
-  //軸を表示
-  const axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
+  // //軸を表示
+  // const axesHelper = new THREE.AxesHelper(5);
+  // scene.add(axesHelper);
 
   animate();
 }

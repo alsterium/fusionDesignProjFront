@@ -115,6 +115,19 @@
                       <i class="material-icons">format_size</i>TextStyle
                     </div>
                     <div class="collapsible-body row">
+                      <div class="text-color-picker col s6">
+                        TextColor
+                        <div style="margin-bottom: 3px;">
+                          <a class="waves-light btn-floating red" @click="changeTextColor('red')"></a>
+                          <a class="waves-light btn-floating blue" @click="changeTextColor('blue')"></a>
+                          <a class="waves-light btn-floating green" @click="changeTextColor('green')"></a>
+                        </div>
+                        <div>
+                          <a class="waves-light btn-floating pink" @click="changeTextColor('pink')"></a>
+                          <a class="waves-light btn-floating yellow" @click="changeTextColor('yellow')"></a>
+                          <a class="waves-light btn-floating purple" @click="changeTextColor('purple')"></a>
+                        </div>
+                      </div>
                       <div class="input-field text-picker col s6">
                         TextFont
                         <select>
@@ -123,18 +136,10 @@
                           <option value="3">Font 3</option>
                         </select>
                       </div>
-                      <div class="text-color-picker col s6">
-                        TextColor
-                        <div style="margin-bottom: 3px;">
-                          <a class="waves-light btn-floating red" @click="changeTextColor('red')"></a>
-                          <a class="waves-light btn-floating blue"></a>
-                          <a class="waves-light btn-floating green"></a>
-                        </div>
-                        <div>
-                          <a class="waves-light btn-floating pink"></a>
-                          <a class="waves-light btn-floating yellow"></a>
-                          <a class="waves-light btn-floating purple"></a>
-                        </div>
+
+                      <br>
+                      <div>
+                        BorderColor
                       </div>
                     </div>
                   </li>
