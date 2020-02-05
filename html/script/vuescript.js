@@ -3,16 +3,18 @@ new Vue({
   data: {
     toggleView: true,
     stampEditMode: false,
-    facingValue: "environment"
+    facingValue: "environment",
+    selectedFont: "",
+    Text: ""
   },
   methods: {
     grabImage: function() {
       var canvas = document.querySelector("#stampCanvas_lower");
       var stampBG = document.querySelector("#stampCanvas_upper");
-      
+
       console.log(canvas);
-      var context = canvas.getContext('2d');
-      context.drawImage(stampBG, 0, 0);
+      var context = canvas.getContext("2d");
+      context.drawImage(stampBG, 0, 0, 400, 400);
       console.log(context);
 
       var zip = new JSZip();
@@ -21,8 +23,9 @@ new Vue({
       //console.log(image);
       //image = window.atob(image.replace(/^.*,/,''));
       //console.log(image);
-      zip.file("stamp.png", canvas.toDataURL().split('base64,')[1],{base64: true});
-
+      zip.file("stamp.png", canvas.toDataURL().split("base64,")[1], {
+        base64: true
+      });
 
       // var image = new Image();
       // image = canvas.toDataURL();
@@ -33,19 +36,16 @@ new Vue({
       // console.log(zip);
       // //zip.file(image, bin_image, {binary: true});
 
-       console.log(zip);
+      console.log(zip);
 
-       //const uri = URL.createObjectURL(zip);
+      //const uri = URL.createObjectURL(zip);
 
+      //var FileSaver = require('file-saver');
 
-
-       //var FileSaver = require('file-saver');
-
-       let link = document.getElementById("dllink");
-       zip.generateAsync({type: 'blob'}).then(function(content){
-        saveAs(content, 'stamp.zip');
-       });
-      
+      let link = document.getElementById("dllink");
+      zip.generateAsync({ type: "blob" }).then(function(content) {
+        saveAs(content, "stamp.zip");
+      });
     },
     activateCamera: function() {
       this.toggleView = !this.toggleView;
@@ -97,8 +97,17 @@ new Vue({
       this.$nextTick(() => initStampCanvas()); //DOMレンダリングが更新されたタイミングで呼び出されるコールバック関数
       this.stampEditMode = true;
     },
-    changeTextColor: function(str){
-      updateText(str);
+    changeTextColor: function(str) {
+      updateText(str, "text_color");
+    },
+    changeBorderWidth: function(val) {
+      updateText(val, "border_weight");
+    },
+    changeFonts: function() {
+      updateText(this.selectedFont, "font");
+    },
+    changeText: function() {
+      updateText(this.Text, "text");
     }
   }
 });
