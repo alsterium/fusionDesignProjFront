@@ -8,17 +8,20 @@ function initStampCanvas() {
     size: 100,
     originX: "center",
     originY: "center",
-    text:"おいっす"
+    text: "おいっす"
   };
   var textGroup = create_bag_character(fontStyle);
   stampCanvas.add(textGroup);
 }
 //テキストの更新
-function updateText(str) {
-  stampCanvas.getActiveObject()._objects[2].setColor(str);
+function updateText(str, option) {
+  if (option === "text_color") {
+    stampCanvas.getActiveObject()._objects[2].setColor(str);
+    stampCanvas.getActiveObject()._objects[1].setColor(str);
+  }
+
   // stampCanvas.clear();
   stampCanvas.requestRenderAll();
-  console.log(str);
 }
 
 function create_bag_character(font_style) {

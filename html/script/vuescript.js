@@ -69,7 +69,8 @@ new Vue({
       this.stampEditMode = true;
     },
     changeTextColor: function(str){
-      updateText(str);
+
+      updateText(str,"text_color");
     }
   }
 });
