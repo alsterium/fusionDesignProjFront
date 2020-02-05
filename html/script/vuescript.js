@@ -3,7 +3,9 @@ new Vue({
   data: {
     toggleView: true,
     stampEditMode: false,
-    facingValue: "environment"
+    facingValue: "environment",
+    selectedFont:'',
+    Text:''
   },
   methods: {
     grabImage: function() {
@@ -69,8 +71,16 @@ new Vue({
       this.stampEditMode = true;
     },
     changeTextColor: function(str){
-
       updateText(str,"text_color");
+    },
+    changeBorderWidth: function(val){
+      updateText(val,"border_weight");
+    },
+    changeFonts: function(){
+      updateText(this.selectedFont,'font');
+    },
+    changeText: function(){
+      updateText(this.Text,'text');
     }
   }
 });

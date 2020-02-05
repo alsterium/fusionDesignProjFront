@@ -17,7 +17,16 @@ function initStampCanvas() {
 function updateText(str, option) {
   if (option === "text_color") {
     stampCanvas.getActiveObject()._objects[2].setColor(str);
-    stampCanvas.getActiveObject()._objects[1].setColor(str);
+    stampCanvas.getActiveObject()._objects[0].set("stroke",str);
+  }
+  if(option === "border_weight"){
+    stampCanvas.getActiveObject()._objects[0].set("strokeWidth",str);
+  }
+  if(option === "font"){
+    stampCanvas.getActiveObject()._objects.forEach((value,index)=>{value.set("fontFamily",str)});
+  }
+  if(option === "text"){
+    stampCanvas.getActiveObject()._objects.forEach((value,index)=>{value.set("text",str)});
   }
 
   // stampCanvas.clear();
