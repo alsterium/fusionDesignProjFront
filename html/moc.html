@@ -7,11 +7,13 @@
     <!-- loading-libraries -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.5.0/fabric.min.js"></script>
+    <script src="../lib/FileSaver.min.js"></script>
 
     <script src="../lib/three.min.js"></script>
     <script src="../lib/three-vrm.min.js"></script>
     <script src="../lib/GLTFLoader.js"></script>
     <script src="../lib/OrbitControls.js"></script>
+    <script src="../lib/jszip.min.js"></script>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -26,15 +28,10 @@
       href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
       rel="stylesheet"
     />
-
-    <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
-
-
-
+    <link
+      href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"
+      rel="stylesheet"
+    />
 
     <script src="./script/threeJSscript.js"></script>
     <script src="./script/stampScript.js"></script>
@@ -110,7 +107,7 @@
             <!-- スタンプ作成モード -->
             <div class="input-field">
               <div class="input-div">
-                <input id="stampText" type="text" class="validate" v-model="Text" @change="changeText">
+                <input id="stampText" type="text" class="validate" />
                 <label for="stampText">文字を入力</label>
               </div>
               <div>
@@ -135,23 +132,16 @@
                       </div>
                       <div class="input-field text-picker col s6">
                         TextFont
-                        <select v-model="selectedFont" @change="changeFonts">
-                          <option value="Nico Moji">ニコモジ</option>
-                          <option value="M PLUS 1p">M PLUS 1p</option>
-                          <option value="M PLUS Rounded 1c">M PLUS Rounded 1c</option>
-                          <option value="Hannari">はんなり明朝</option>
-                          <option value="Nikukyu">ニクキュウ</option>
+                        <select>
+                          <option value="1">Font 1</option>
+                          <option value="2">Font 2</option>
+                          <option value="3">Font 3</option>
                         </select>
                       </div>
 
                       <br>
-                      <div class="col">
-                        BorderWeight
-                        <div>
-                          <a class="btn" @click="changeBorderWidth(25)">Heavy</a>
-                          <a class="btn" @click="changeBorderWidth(20)">Middle</a>
-                          <a class="btn" @click="changeBorderWidth(15)">Light</a>
-                        </div>
+                      <div>
+                        BorderColor
                       </div>
                     </div>
                   </li>
@@ -161,7 +151,7 @@
                 class="btn"
                 @click="grabImage"
                 id="dllink"
-                download="canvas.png"
+                download="canvas.zip"
                 >完成！</a
               >
               <!--a class="btn"  @click=imagedownload>完成！</a-->

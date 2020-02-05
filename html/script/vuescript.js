@@ -3,22 +3,49 @@ new Vue({
   data: {
     toggleView: true,
     stampEditMode: false,
-    facingValue: "environment",
-    selectedFont:'',
-    Text:''
+    facingValue: "environment"
   },
   methods: {
     grabImage: function() {
-      console.log("aa");
       var canvas = document.querySelector("#stampCanvas_lower");
       var stampBG = document.querySelector("#stampCanvas_upper");
-
+      
       console.log(canvas);
-      var context = canvas.getContext("2d");
-      context.drawImage(stampBG, 0, 0, 400, 400);
+      var context = canvas.getContext('2d');
+      context.drawImage(stampBG, 0, 0);
       console.log(context);
-      let link = document.getElementById("dllink");
-      link.href = canvas.toDataURL();
+
+      var zip = new JSZip();
+      //var image = new Image();
+      //image.src = canvas.toDataURL();
+      //console.log(image);
+      //image = window.atob(image.replace(/^.*,/,''));
+      //console.log(image);
+      zip.file("stamp.png", canvas.toDataURL().split('base64,')[1],{base64: true});
+
+
+      // var image = new Image();
+      // image = canvas.toDataURL();
+      // console.log(image);
+      // zip.file(image, contentOfA, {
+      //   compression: "STORE"
+      // });
+      // console.log(zip);
+      // //zip.file(image, bin_image, {binary: true});
+
+       console.log(zip);
+
+       //const uri = URL.createObjectURL(zip);
+
+
+
+       //var FileSaver = require('file-saver');
+
+       let link = document.getElementById("dllink");
+       zip.generateAsync({type: 'blob'}).then(function(content){
+        saveAs(content, 'stamp.zip');
+       });
+      
     },
     activateCamera: function() {
       this.toggleView = !this.toggleView;
@@ -71,16 +98,7 @@ new Vue({
       this.stampEditMode = true;
     },
     changeTextColor: function(str){
-      updateText(str,"text_color");
-    },
-    changeBorderWidth: function(val){
-      updateText(val,"border_weight");
-    },
-    changeFonts: function(){
-      updateText(this.selectedFont,'font');
-    },
-    changeText: function(){
-      updateText(this.Text,'text');
+      updateText(str);
     }
   }
 });
