@@ -109,10 +109,10 @@ new Vue({
     changeText: function() {
       updateText(this.Text, "text");
     },
-    writeDownToLowerCanvas: function(){
+    writeDownToLowerCanvas: function() {
+      discardSelection();
       var canvas = document.querySelector("#stampCanvas_lower");
       var stampBG = document.querySelector("#stampCanvas_upper");
-
       var context = canvas.getContext("2d");
       context.drawImage(stampBG, 0, 0, 400, 400);
     }

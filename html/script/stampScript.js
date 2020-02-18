@@ -65,3 +65,9 @@ function create_bag_character(font_style) {
   });
   return textGroup;
 }
+
+function discardSelection(){
+  stampCanvas.discardActiveObject();
+  console.log(stampCanvas._activeObject);
+  stampCanvas.requestRenderAll()
+}
