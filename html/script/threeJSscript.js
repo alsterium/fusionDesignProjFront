@@ -3,7 +3,13 @@
 
 // three.jsで使う各オブジェクトの宣言
 var render, scene, camera, light, controls;
-var currentModel = "assetts/bear.vrm";
+var currentModel = "assetts/AliciaSolid.vrm";
+
+// CHANGED: ポーズ変換に必要な変数とか
+var init_pose = undefined;
+var changeFlag = false;
+var currentVrm = undefined;
+const  clock = new THREE.Clock();
 
 // 入力するopenposeデータ
 var openPoseDataArray = [
@@ -26,25 +32,25 @@ var openPoseDataArray = [
   [-514.5184003971674, -116.86618120857737, 524.1660520795907]
 ];
 
-// var openPoseDataArray = [
-//   [15.257944842269263, 15.982052800725015, -114.7533608385852],
-//   [-40.53693109191771, 131.46496955243475, -93.32244593616981],
-//   [-186.60580867084593, 60.48627460890827, -524.9655508389833],
-//   [-18.8528097058963, 143.63230324356167, -929.2343078416505],
-//   [84.35277259213147, -99.50075784653107, -94.47492225793796],
-//   [-40.89391455089092, -158.60976677697832, -537.8788162579491],
-//   [152.7930198304419, -65.54845948299379, -966.5844824343498],
-//   [43.1208019790524, 38.59047669993919, 133.25320398726575],
-//   [53.572430018015346, 22.98665744352858, 400.29696911279444],
-//   [-18.324548248840525, -19.919344429700466, 467.68456035434536],
-//   [41.962732978901606, 5.804056978945414, 541.3510213172691],
-//   [153.1815384289993, -79.80051794824307, 383.6469283895747],
-//   [257.38697472471296, -219.35877961789566, 220.00697868868636],
-//   [125.83162654528165, -238.85303159866535, 105.46572739213778],
-//   [-50.086656931811106, 145.77500633702502, 385.90083092248426],
-//   [-271.13481361110763, 216.3179079679857, 354.3412306140378],
-//   [-260.97016057530305, 86.94103728611846, 564.7902887366829]
-// ];
+var openPoseDataArray2 = [
+  [15.257944842269263, 15.982052800725015, -114.7533608385852],
+  [-40.53693109191771, 131.46496955243475, -93.32244593616981],
+  [-186.60580867084593, 60.48627460890827, -524.9655508389833],
+  [-18.8528097058963, 143.63230324356167, -929.2343078416505],
+  [84.35277259213147, -99.50075784653107, -94.47492225793796],
+  [-40.89391455089092, -158.60976677697832, -537.8788162579491],
+  [152.7930198304419, -65.54845948299379, -966.5844824343498],
+  [43.1208019790524, 38.59047669993919, 133.25320398726575],
+  [53.572430018015346, 22.98665744352858, 400.29696911279444],
+  [-18.324548248840525, -19.919344429700466, 467.68456035434536],
+  [41.962732978901606, 5.804056978945414, 541.3510213172691],
+  [153.1815384289993, -79.80051794824307, 383.6469283895747],
+  [257.38697472471296, -219.35877961789566, 220.00697868868636],
+  [125.83162654528165, -238.85303159866535, 105.46572739213778],
+  [-50.086656931811106, 145.77500633702502, 385.90083092248426],
+  [-271.13481361110763, 216.3179079679857, 354.3412306140378],
+  [-260.97016057530305, 86.94103728611846, 564.7902887366829]
+];
 
 // var openPoseDataArray = [
 //    [16.942990600348004, 27.237315101216257, -120.63414675857358],
@@ -79,12 +85,12 @@ function setPoseFromQuarternion(QuatArray) {
   let Pose = {
     hips: {
       rotation:[
-        0.0,
-        1.0,
-        0.0,
-        0.0
-      ]
-    },
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
     rightUpperLeg: {
       rotation: [
         QuatArray[1].x,
@@ -263,8 +269,8 @@ function calcquaternion(normvec,up) {
   return q.setFromUnitVectors(up,normvec);
 }
 //OpenPoseデータから回転制御形式のポーズデータを求める
-function convertPose(OpenPoseData) {
-  //ボーンノードごとの上方向ベクトルの設定
+function convertPose(OpenPoseData) {  
+  //ボーンノードごとの上方向ベクトルの設定  
   let up = new Array();
   up[0] = new THREE.Vector3(0,1,0);
   up[1] = new THREE.Vector3(0,-1,0);
@@ -290,26 +296,38 @@ function convertPose(OpenPoseData) {
   //単位ベクトルを算出
   let normVec = computeUnit(OpenPoseData);
   let quat = new THREE.Quaternion();
-  //各ノードごとの回転角度（クォータニオン）を算出
+  //各ノードごとの回転角度（クォータニオン）を算出  
   for (let i = 0; i < normVec.length; i++)
     quat[i] = calcquaternion(normVec[i],up[i]);
-  //ポーズを返す
+    //ポーズを返す
   return setPoseFromQuarternion(quat);
+}
+
+// CHANGED: Add function
+function initializePose(vrm){
+  vrm.humanoid.setPose(init_pose);
 }
 
 //VRMモデルをロードする
 function loadVRM(currentModel) {
-  let currentVrm = undefined;
+  //let currentVrm = undefined;
   const loader = new THREE.GLTFLoader();
   loader.crossOrigin = "anonymous";
   loader.load(
     currentModel,
     gltf => {
       THREE.VRM.from(gltf).then(vrm => {
+        // CHANGED: ポーズ変換させるためにvrmを記憶
+        currentVrm = vrm;
         scene.add(vrm.scene);
-        console.log(vrm);
         // VRMモデルにPoseData(Json形式)のボーンデータを設定
         THREE.VRM.from(gltf).then(vrm => {
+          // CHANGED: 初期ポーズ(T)を記憶しておく
+          init_pose = vrm.humanoid.getPose();
+          Object.keys(init_pose).forEach((key) =>{
+            delete init_pose[key].position;
+          });
+
           let pose = convertPose(openPoseDataArray);
           vrm.humanoid.setPose(pose);
         });
@@ -361,11 +379,11 @@ function init() {
   //VRMを読み込む
   loadVRM(currentModel);
 
-  // //helpers
+  //helpers
   const gridHelper = new THREE.GridHelper(10, 10);
   scene.add(gridHelper);
 
-  // //軸を表示
+  //軸を表示
   const axesHelper = new THREE.AxesHelper(5);
   scene.add(axesHelper);
 
@@ -376,6 +394,19 @@ function init() {
 function animate() {
   requestAnimationFrame(animate);
   render();
+
+  // CHANGED: ポーズの動的な変換
+  if(currentVrm && changeFlag){
+    // ポーズを初期化してからでないと
+    // 変更後から変更するのでおかしくなる
+    initializePose(currentVrm);
+    const deltaTime = clock.getDelta();
+    // pose変更の処理
+    let pose = convertPose(openPoseDataArray);
+    currentVrm.humanoid.setPose(pose);
+    currentVrm.update(deltaTime);
+    changeFlag = false;
+  }
 }
 
 function render() {

@@ -28,18 +28,23 @@
       href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"
+      rel="stylesheet"
+    />
 
     <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/nikukyu.css" rel="stylesheet">
-
-
-
-
     <script src="./script/threeJSscript.js"></script>
     <script src="./script/stampScript.js"></script>
+    <!-- CHANGED: -->
+    <script src="./script/submitScript.js"></script>
+
+    <!-- CHANGED: -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="./css/style.css" />
     <title>Emoji Stamp Maker</title>
@@ -122,6 +127,14 @@
                       <i class="material-icons">format_size</i>TextStyle
                     </div>
                     <div class="collapsible-body row">
+                      <div class="input-field text-picker col s6">
+                        TextFont
+                        <select>
+                          <option value="1">Font 1</option>
+                          <option value="2">Font 2</option>
+                          <option value="3">Font 3</option>
+                        </select>
+                      </div>
                       <div class="text-color-picker col s6">
                         TextColor
                         <div style="margin-bottom: 3px;">
@@ -174,6 +187,16 @@
       </div>
     </div>
 
+    <!-- 画像ファイルを送信するとこ.デバッグ用
+    <form id="my_form">
+      <input type="file" name="file">
+      <button type="button" onclick="sendFile();">送信</button>
+    </form>
+    -->
+    <!-- CHANGED: 撮影した画像を載せるキャンバス．非表示になってる-->
+    <canvas id="imageSaveCanvas"></canvas>
+
+    
     <!-- </div> -->
 
     <!--JavaScript at end of body for optimized loading-->
