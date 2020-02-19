@@ -3,7 +3,7 @@
 
 // three.jsで使う各オブジェクトの宣言
 var render, scene, camera, light, controls;
-var currentModel = "assetts/AliciaSolid.vrm";
+var currentModel = "assetts/bear.vrm";
 
 // 入力するopenposeデータ
 var openPoseDataArray = [
@@ -362,12 +362,12 @@ function init() {
   loadVRM(currentModel);
 
   // //helpers
-  // const gridHelper = new THREE.GridHelper(10, 10);
-  // scene.add(gridHelper);
+  const gridHelper = new THREE.GridHelper(10, 10);
+  scene.add(gridHelper);
 
   // //軸を表示
-  // const axesHelper = new THREE.AxesHelper(5);
-  // scene.add(axesHelper);
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
 
   animate();
 }
